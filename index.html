@@ -3,1036 +3,1091 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROADIN — Premium Rental Service</title>
-    <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    <title>ROADIN RENTCAR | 국산·수입 렌터카 예약 상담</title>
+    <meta name="description" content="현대, 기아, BMW, 벤츠, 아우디, KG모빌리티, 르노코리아, 쉐보레, 포드 차량 단기렌트, 월렌트, 장기렌트 상담형 렌터카 홈페이지">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
     <style>
         :root {
-            --black: #000000;
-            --white: #ffffff;
-            --grey: #757575;
-            --border: #e5e5e5;
-            --font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            --ink: #141414;
+            --muted: #6f7278;
+            --line: #dfe3e8;
+            --paper: #ffffff;
+            --soft: #f5f7fa;
+            --blue: #183a72;
+            --green: #117a55;
+            --red: #b43b3b;
+            --yellow: #f4c542;
+            --shadow: 0 18px 45px rgba(20, 20, 20, .12);
+            --font: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        html {
-            overflow-x: hidden;
-        }
-
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            background-color: var(--white);
-            color: var(--black);
-            font-family: var(--font-main);
-            overflow-x: hidden;
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--font);
+            letter-spacing: 0;
         }
+        a { color: inherit; text-decoration: none; }
+        button, input, select { font: inherit; }
+        img { display: block; max-width: 100%; }
 
-        img { max-width: 100%; display: block; }
-
-        .label {
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--grey);
+        .topbar {
+            background: var(--ink);
+            color: #fff;
+            font-size: 13px;
+            padding: 9px 28px;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
         }
-
-        /* Nav */
-        nav {
-            height: 70px;
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(255,255,255,.96);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 40px;
-            border-bottom: 1px solid var(--border);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            background: var(--white);
-            z-index: 1000;
+            padding: 18px 28px;
         }
-
-        .logo {
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 900;
             font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.02em;
         }
-
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            background: var(--ink);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            border-radius: 6px;
+            font-size: 15px;
+        }
         .nav-links {
             display: flex;
-            gap: 40px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--black);
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .nav-icons {
-            display: flex;
-            gap: 24px;
             align-items: center;
+            gap: 26px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .nav-cta {
+            border: 1px solid var(--ink);
+            padding: 10px 16px;
+            border-radius: 6px;
+            background: var(--ink);
+            color: #fff;
         }
 
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px;
-        }
-
-        .nav-toggle span {
-            display: block;
-            width: 22px;
-            height: 2px;
-            background: var(--black);
-            margin: 5px 0;
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 70px;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            padding: 20px 40px;
-            z-index: 999;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .mobile-menu.open { display: flex; }
-
-        .mobile-menu a {
-            text-decoration: none;
-            color: var(--black);
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        /* Hero */
         .hero {
+            min-height: calc(100vh - 94px);
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 100vh;
-            padding-top: 70px;
+            grid-template-columns: minmax(0, 1fr) 520px;
+            background: var(--soft);
         }
-
         .hero-visual {
             position: relative;
-            background: #111;
+            min-height: 560px;
             overflow: hidden;
-            border-right: 1px solid var(--border);
         }
-
         .hero-visual img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(0.2) contrast(1.1);
+            filter: saturate(.9) contrast(1.04);
         }
-
-        .visual-overlay-label {
+        .hero-copy {
             position: absolute;
-            bottom: 30px;
-            left: 30px;
-            color: var(--white);
+            inset: auto 0 0 0;
+            padding: 54px 48px;
+            color: #fff;
+            background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.72));
         }
-
-        .hero-content {
-            padding: 80px;
+        .eyebrow {
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--blue);
+            text-transform: uppercase;
+            margin: 0 0 12px;
+        }
+        .hero-copy .eyebrow { color: #b9cdf5; }
+        h1 {
+            font-size: 54px;
+            line-height: 1.08;
+            margin: 0 0 18px;
+            letter-spacing: 0;
+        }
+        .hero-copy p {
+            max-width: 650px;
+            font-size: 18px;
+            line-height: 1.65;
+            margin: 0;
+            color: rgba(255,255,255,.84);
+        }
+        .booking-panel {
+            align-self: stretch;
+            background: #fff;
+            border-left: 1px solid var(--line);
+            padding: 36px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 22px;
         }
-
-        .hero-header h1 {
-            font-size: 56px;
-            line-height: 1.1;
-            font-weight: 700;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
+        .booking-panel h2 {
+            margin: 0;
+            font-size: 28px;
+            line-height: 1.25;
         }
-
-        .hero-header p {
-            font-size: 16px;
-            color: var(--grey);
-            max-width: 400px;
-            line-height: 1.6;
+        .booking-grid {
+            display: grid;
+            gap: 12px;
         }
-
-        /* Search grid */
-        .search-grid {
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--muted);
+            margin-bottom: 7px;
+        }
+        .field input,
+        .field select {
+            width: 100%;
+            min-height: 48px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 0 13px;
+            background: #fff;
+            color: var(--ink);
+        }
+        .booking-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            border-top: 1px solid var(--black);
-            border-left: 1px solid var(--black);
-            margin-top: 60px;
+            gap: 10px;
         }
-
-        .search-item {
-            padding: 24px;
-            border-right: 1px solid var(--black);
-            border-bottom: 1px solid var(--black);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            transition: background 0.2s ease;
-            min-width: 0;
-        }
-
-        .search-item:hover {
-            background: #fcfcfc;
-        }
-
-        .search-item input, .search-item select {
-            border: none;
-            outline: none;
-            font-size: 15px;
-            font-family: inherit;
-            background: transparent;
-            width: 100%;
-            min-width: 0;
-        }
-
-        .search-item input::placeholder {
-            color: #ccc;
-        }
-
-        .search-actions {
-            grid-column: span 2;
-            display: flex;
-            flex-wrap: wrap;
-            border-bottom: 1px solid var(--black);
-            border-right: 1px solid var(--black);
-        }
-
-        .btn-primary {
-            flex: 1;
-            min-width: 140px;
-            background: var(--black);
-            color: var(--white);
-            border: none;
-            padding: 24px;
-            font-size: 14px;
-            font-weight: 600;
+        .btn {
+            min-height: 50px;
+            border: 1px solid var(--ink);
+            border-radius: 6px;
+            font-weight: 900;
             cursor: pointer;
-            transition: opacity 0.2s;
+            background: #fff;
+        }
+        .btn.primary {
+            background: var(--ink);
+            color: #fff;
+        }
+        .notice {
+            border: 1px solid #d9e5f8;
+            background: #f2f6fd;
+            border-radius: 6px;
+            padding: 14px;
+            font-size: 13px;
+            color: #34415a;
+            line-height: 1.55;
         }
 
-        .btn-secondary {
-            flex: 1;
-            min-width: 140px;
-            background: var(--white);
-            color: var(--black);
-            border: none;
-            padding: 24px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            border-left: 1px solid var(--black);
-        }
-
-        .btn-primary:hover { opacity: 0.9; }
-        .btn-secondary:hover { background: #f5f5f5; }
-
-        /* Trust banner */
-        .trust-banner {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px 30px;
-            margin-top: 40px;
-        }
-
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .trust-item .dot {
-            width: 4px;
-            height: 4px;
-            background: var(--black);
-            flex-shrink: 0;
-        }
-
-        .trust-item span {
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        /* Metrics */
-        .metrics-bar {
-            grid-column: span 2;
+        .metrics {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            border-top: 1px solid var(--border);
-            background: var(--white);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: #fff;
+        }
+        .metric {
+            padding: 28px;
+            border-right: 1px solid var(--line);
+        }
+        .metric:last-child { border-right: 0; }
+        .metric strong {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .metric span {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 700;
         }
 
-        .metric-card {
-            padding: 40px;
-            border-right: 1px solid var(--border);
+        .section {
+            padding: 82px 28px;
+        }
+        .section.alt { background: var(--soft); }
+        .section-head {
+            max-width: 1180px;
+            margin: 0 auto 32px;
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            align-items: end;
+        }
+        .section-head h2 {
+            font-size: 36px;
+            margin: 0 0 12px;
+        }
+        .section-head p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.65;
+            max-width: 720px;
+        }
+        .filter-groups {
+            max-width: 1180px;
+            margin: 0 auto 24px;
+            display: grid;
+            gap: 14px;
+        }
+        .filter-group {
+            display: grid;
+            gap: 8px;
+        }
+        .filter-label {
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--muted);
+        }
+        .filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .filter-btn {
+            border: 1px solid var(--line);
+            background: #fff;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-weight: 900;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background: var(--ink);
+            border-color: var(--ink);
+            color: #fff;
+        }
+        .inventory {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .car-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 8px;
             min-width: 0;
         }
-
-        .metric-card:last-child { border-right: none; }
-
-        .metric-value {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+        .car-photo {
+            height: 168px;
+            background: linear-gradient(135deg, #e9edf3, #f8fafc);
+            position: relative;
+            overflow: hidden;
         }
-
-        .metric-label {
+        .car-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .badge-row {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
             font-size: 11px;
-            color: var(--grey);
-            font-weight: 600;
-            text-transform: uppercase;
+            font-weight: 900;
         }
-
-        .bottom-shelf {
-            padding: 20px 40px;
+        .badge {
+            background: rgba(255,255,255,.94);
+            border: 1px solid rgba(20,20,20,.12);
+            border-radius: 999px;
+            padding: 6px 9px;
+        }
+        .badge.ready { color: var(--green); }
+        .badge.hot { color: var(--red); }
+        .maker-chip {
+            display: inline-flex;
+            width: fit-content;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 900;
+            color: #fff;
+            background: var(--maker-color, var(--ink));
+        }
+        .car-body {
+            padding: 18px;
+            display: grid;
+            gap: 12px;
+        }
+        .car-title {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .car-title h3 {
+            margin: 0;
+            font-size: 20px;
+            line-height: 1.25;
+        }
+        .car-title small {
+            color: var(--muted);
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .chips {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 6px;
+        }
+        .chip {
+            background: var(--soft);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 6px 9px;
+            font-size: 12px;
+            color: #3f444a;
+            font-weight: 800;
+        }
+        .price {
+            display: flex;
+            align-items: baseline;
             justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--border);
+            gap: 12px;
+            border-top: 1px solid var(--line);
+            padding-top: 12px;
+        }
+        .price strong {
+            font-size: 22px;
+        }
+        .price span {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+        }
+        .car-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .car-actions button {
+            min-height: 42px;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+            background: #fff;
+            font-weight: 900;
+            cursor: pointer;
+        }
+        .car-actions button:first-child {
+            border-color: var(--ink);
+            background: var(--ink);
+            color: #fff;
         }
 
-        .copyright {
-            font-size: 10px;
-            color: var(--grey);
-            letter-spacing: 0.05em;
+        .rate-board {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 18px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border-bottom: 1px solid var(--line);
+            text-align: left;
+            padding: 15px;
+            font-size: 14px;
+        }
+        th {
+            background: var(--ink);
+            color: #fff;
+            font-size: 13px;
+        }
+        tr:last-child td { border-bottom: 0; }
+        .source-box {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 22px;
+            line-height: 1.65;
+        }
+        .source-box h3 { margin: 0 0 12px; }
+        .source-box ul { margin: 0; padding-left: 18px; color: var(--muted); }
+        .source-box a { text-decoration: underline; text-underline-offset: 3px; }
+
+        .steps,
+        .guide-grid {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+        .info-card {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            padding: 24px;
+        }
+        .info-card strong {
+            display: block;
+            font-size: 15px;
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+        .info-card h3 {
+            margin: 0 0 10px;
+            font-size: 19px;
+        }
+        .info-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.6;
+            font-size: 14px;
         }
 
-        /* Sections */
-        .section { padding: 100px 40px; border-top: 1px solid var(--border); }
-        .section-title { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; }
-        .section-sub { font-size: 15px; color: var(--grey); line-height: 1.6; margin-bottom: 60px; max-width: 600px; }
+        .consult {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: .95fr 1.05fr;
+            gap: 22px;
+            align-items: stretch;
+        }
+        .consult-card {
+            background: var(--ink);
+            color: #fff;
+            border-radius: 8px;
+            padding: 34px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        .consult-card h2 {
+            margin: 0;
+            font-size: 34px;
+            line-height: 1.25;
+        }
+        .consult-card p {
+            color: rgba(255,255,255,.72);
+            line-height: 1.65;
+        }
+        .consult-form {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .consult-form .wide { grid-column: span 2; }
+        textarea {
+            width: 100%;
+            min-height: 112px;
+            resize: vertical;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 13px;
+            font: inherit;
+        }
+        .result-note {
+            grid-column: span 2;
+            background: #f4f8f5;
+            color: #24563f;
+            border: 1px solid #cfe4d6;
+            border-radius: 6px;
+            padding: 13px;
+            font-size: 13px;
+            line-height: 1.55;
+            display: none;
+        }
+        .result-note.show { display: block; }
 
-        /* Vehicle Types */
-        .vehicle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); }
-        .vehicle-card { background: var(--white); padding: 40px; display: flex; flex-direction: column; gap: 12px; }
-        .vehicle-card h3 { font-size: 20px; font-weight: 700; }
-        .vehicle-card p { font-size: 14px; color: var(--grey); line-height: 1.5; }
-        .vehicle-card .btn-text { margin-top: auto; font-size: 13px; font-weight: 600; text-decoration: underline; cursor: pointer; }
+        .footer {
+            padding: 40px 28px 86px;
+            background: #0f1114;
+            color: #fff;
+        }
+        .footer-inner {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.4fr repeat(3, 1fr);
+            gap: 28px;
+        }
+        .footer p, .footer a {
+            color: rgba(255,255,255,.66);
+            line-height: 1.65;
+            font-size: 13px;
+        }
+        .footer h4 {
+            margin: 0 0 12px;
+            font-size: 13px;
+        }
+        .mobile-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 30;
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid rgba(255,255,255,.16);
+            box-shadow: 0 -10px 28px rgba(0,0,0,.18);
+        }
+        .mobile-bar a {
+            min-height: 56px;
+            display: grid;
+            place-items: center;
+            background: var(--ink);
+            color: #fff;
+            font-weight: 900;
+        }
+        .mobile-bar a:last-child { background: var(--blue); }
 
-        /* Popular Cars */
-        .car-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); margin-bottom: 40px; }
-        .car-card { background: var(--white); padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-        .car-img { height: 200px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--grey); }
-        .car-info { padding: 30px; display: flex; flex-direction: column; gap: 10px; }
-        .car-info h4 { font-size: 18px; font-weight: 700; }
-        .car-meta { font-size: 12px; color: var(--grey); font-weight: 500; }
-        .car-price { font-size: 14px; font-weight: 700; margin-top: 8px; }
-        .car-btn { margin-top: 16px; padding: 12px; border: 1px solid var(--black); background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .car-btn:hover { background: var(--black); color: var(--white); }
-        .section-actions { display: flex; flex-wrap: wrap; gap: 16px; }
-        .section-actions button { padding: 14px 28px; font-size: 13px; font-weight: 600; border: 1px solid var(--black); background: var(--white); cursor: pointer; }
-        .section-actions .btn-fill { background: var(--black); color: var(--white); border: none; }
-
-        /* Benefits */
-        .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); }
-        .benefit-card { background: var(--white); padding: 40px; display: flex; flex-direction: column; gap: 12px; }
-        .benefit-card h3 { font-size: 18px; font-weight: 700; }
-        .benefit-card p { font-size: 14px; color: var(--grey); line-height: 1.5; }
-        .highlight-bar { margin-top: 60px; padding: 30px 40px; border: 1px solid var(--black); font-size: 18px; font-weight: 600; text-align: center; }
-
-        /* Promotions */
-        .promo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); }
-        .promo-card { background: var(--white); padding: 40px; display: flex; flex-direction: column; gap: 12px; }
-        .promo-badge { display: inline-block; padding: 6px 12px; border: 1px solid var(--black); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; width: fit-content; }
-        .promo-card h3 { font-size: 20px; font-weight: 700; }
-        .promo-card p { font-size: 14px; color: var(--grey); line-height: 1.5; }
-        .promo-btn { margin-top: auto; padding: 12px; border: 1px solid var(--black); background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; }
-        .promo-note { margin-top: 30px; font-size: 12px; color: var(--grey); }
-
-        /* Process */
-        .process-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); }
-        .process-card { background: var(--white); padding: 30px; display: flex; flex-direction: column; gap: 12px; }
-        .process-num { font-size: 11px; font-weight: 700; color: var(--grey); }
-        .process-card h3 { font-size: 16px; font-weight: 700; }
-        .process-card p { font-size: 13px; color: var(--grey); line-height: 1.5; }
-
-        /* Reviews */
-        .review-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); }
-        .review-card { background: var(--white); padding: 40px; display: flex; flex-direction: column; gap: 16px; }
-        .review-tag { font-size: 11px; font-weight: 700; color: var(--grey); text-transform: uppercase; letter-spacing: 0.1em; }
-        .review-card h3 { font-size: 18px; font-weight: 700; line-height: 1.4; }
-        .review-card p { font-size: 14px; color: var(--grey); line-height: 1.6; }
-
-        /* Guide */
-        .guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); }
-        .guide-card { background: var(--white); padding: 40px; display: flex; flex-direction: column; gap: 12px; }
-        .guide-card h3 { font-size: 16px; font-weight: 700; }
-        .guide-card p { font-size: 13px; color: var(--grey); line-height: 1.5; }
-
-        /* FAQ */
-        .faq-list { border-top: 1px solid var(--black); }
-        .faq-item { border-bottom: 1px solid var(--black); padding: 30px 40px; cursor: pointer; }
-        .faq-item h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
-        .faq-item p { font-size: 14px; color: var(--grey); line-height: 1.6; max-width: 800px; display: none; }
-        .faq-item.open p { display: block; }
-
-        /* CTA */
-        .cta-section { background: var(--black); color: var(--white); padding: 100px 40px; text-align: center; }
-        .cta-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; }
-        .cta-section p { font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 40px; }
-        .cta-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 30px; }
-        .cta-btns button { padding: 16px 32px; font-size: 14px; font-weight: 600; cursor: pointer; }
-        .cta-btns .btn-white { background: var(--white); color: var(--black); border: none; }
-        .cta-btns .btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.3); }
-        .cta-meta { font-size: 12px; color: rgba(255,255,255,0.5); }
-
-        /* Footer */
-        footer { border-top: 1px solid var(--border); padding: 60px 40px 40px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
-        .footer-brand { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
-        .footer-desc { font-size: 13px; color: var(--grey); line-height: 1.6; }
-        .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; color: var(--grey); }
-        .footer-col a { display: block; font-size: 13px; color: var(--black); text-decoration: none; margin-bottom: 12px; }
-        .footer-bottom { grid-column: span 4; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; padding-top: 40px; border-top: 1px solid var(--border); margin-top: 40px; font-size: 11px; color: var(--grey); }
-
-        /* ===== Responsive breakpoints ===== */
-        @media (max-width: 1100px) {
-            nav { padding: 0 24px; }
-            .nav-links { display: none; }
-            .nav-toggle { display: block; }
-            .mobile-menu { padding: 20px 24px; }
-
+        @media (max-width: 1080px) {
             .hero { grid-template-columns: 1fr; }
-            .hero-visual { height: 320px; border-right: none; border-bottom: 1px solid var(--border); }
-            .hero-content { padding: 40px 24px; gap: 40px; }
-            .hero-header h1 { font-size: 40px; }
-            .hero-header p { max-width: none; }
-
-            .metrics-bar { grid-template-columns: 1fr 1fr; }
-            .metric-card:nth-child(2) { border-right: none; }
-            .metric-card:nth-child(odd) { border-right: 1px solid var(--border); }
-
-            .section { padding: 70px 24px; }
-            .section-title { font-size: 28px; }
-
-            .vehicle-grid, .car-grid, .benefits-grid, .guide-grid { grid-template-columns: 1fr 1fr; }
-            .promo-grid, .review-grid { grid-template-columns: 1fr; }
-            .process-grid { grid-template-columns: repeat(3, 1fr); }
-
-            footer { grid-template-columns: 1fr 1fr; padding: 50px 24px 30px; }
-            .footer-bottom { grid-column: span 2; }
-
-            .cta-section { padding: 70px 24px; }
+            .booking-panel { border-left: 0; border-top: 1px solid var(--line); }
+            .inventory { grid-template-columns: repeat(2, 1fr); }
+            .steps, .guide-grid { grid-template-columns: repeat(2, 1fr); }
+            .rate-board, .consult { grid-template-columns: 1fr; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
         }
-
-        @media (max-width: 768px) {
-            .hero-header h1 { font-size: 32px; }
-            .hero-content { padding: 32px 20px; }
-            .search-grid { margin-top: 40px; }
-            .search-item { padding: 18px; }
-            .search-actions { grid-column: span 2; }
-            .btn-primary, .btn-secondary { padding: 18px; min-width: 100%; }
-
-            .metrics-bar { grid-template-columns: 1fr 1fr; }
-            .metric-card { padding: 24px; }
-            .metric-value { font-size: 24px; }
-
-            .vehicle-grid, .car-grid, .benefits-grid, .guide-grid, .process-grid { grid-template-columns: 1fr; }
-            .section { padding: 50px 20px; }
-            .section-title { font-size: 24px; }
-            .section-sub { margin-bottom: 40px; }
-
-            .faq-item { padding: 20px; }
-
-            .cta-section h2 { font-size: 26px; }
-            .cta-btns button { flex: 1 1 100%; }
-
-            footer { grid-template-columns: 1fr; padding: 40px 20px 24px; gap: 30px; }
-            .footer-bottom { grid-column: span 1; flex-direction: column; align-items: flex-start; }
-
-            .bottom-shelf { padding: 16px 20px; flex-direction: column; align-items: flex-start; }
-        }
-
-        @media (max-width: 480px) {
-            nav { height: 60px; padding: 0 16px; }
-            .mobile-menu { top: 60px; padding: 16px; }
-            .hero { padding-top: 60px; }
-            .hero-header h1 { font-size: 26px; }
-            .search-item input, .search-item select { font-size: 14px; }
-            .metrics-bar { grid-template-columns: 1fr; }
-            .metric-card { border-right: none !important; border-bottom: 1px solid var(--border); }
-            .metric-card:last-child { border-bottom: none; }
+        @media (max-width: 720px) {
+            .topbar { display: none; }
+            .nav { padding: 14px 16px; }
+            .nav-links a:not(.nav-cta) { display: none; }
+            .brand { font-size: 19px; }
+            .hero-visual { min-height: 420px; }
+            .hero-copy { padding: 38px 22px; }
+            h1 { font-size: 36px; }
+            .hero-copy p { font-size: 15px; }
+            .booking-panel { padding: 24px 18px; }
+            .booking-actions, .metrics, .inventory, .steps, .guide-grid, .consult-form, .footer-inner { grid-template-columns: 1fr; }
+            .consult-form .wide, .result-note { grid-column: span 1; }
+            .metric { border-right: 0; border-bottom: 1px solid var(--line); }
+            .section { padding: 58px 18px; }
+            .section-head { display: block; }
+            .section-head h2 { font-size: 28px; }
+            th, td { padding: 12px 10px; font-size: 12px; }
+            .mobile-bar { display: grid; }
         }
     </style>
 </head>
 <body>
+    <div class="topbar">
+        <span>국산·수입 차량 단기렌트 · 월렌트 · 장기렌트 상담</span>
+        <span>전화번호와 운영 지역은 확정 후 즉시 반영 가능</span>
+    </div>
 
-    <nav>
-        <div class="logo">ROADIN</div>
+    <nav class="nav">
+        <a class="brand" href="#top" aria-label="ROADIN 홈">
+            <span class="brand-mark">R</span>
+            <span>ROADIN RENTCAR</span>
+        </a>
         <div class="nav-links">
-            <a href="#">RESERVATION</a>
-            <a href="#">VEHICLES</a>
-            <a href="#">LONG-TERM</a>
-            <a href="#">CORPORATE</a>
-        </div>
-        <div class="nav-icons">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
-                <span></span><span></span><span></span>
-            </button>
+            <a href="#inventory">차량보기</a>
+            <a href="#rates">요금기준</a>
+            <a href="#guide">대여안내</a>
+            <a href="#consult" class="nav-cta">견적상담</a>
         </div>
     </nav>
 
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#">RESERVATION</a>
-        <a href="#">VEHICLES</a>
-        <a href="#">LONG-TERM</a>
-        <a href="#">CORPORATE</a>
-    </div>
-
-    <main>
+    <main id="top">
         <section class="hero">
             <div class="hero-visual">
-                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=2000" alt="Premium Vehicle Detail">
-                <div class="visual-overlay-label">
-                    <p class="label" style="color: rgba(255,255,255,0.6)">Current Fleet Item</p>
-                    <p style="font-size: 13px; font-weight: 500;">911 Carrera Series — Onyx Black</p>
+                <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1800" alt="렌터카 차량 이미지">
+                <div class="hero-copy">
+                    <p class="eyebrow">Multi brand rentcar desk</p>
+                    <h1>국산부터 수입차까지<br>조건별로 바로 비교하세요</h1>
+                    <p>현대·기아·BMW·벤츠·아우디·쌍용·르노삼성·쉐보레·포드 머스탱까지, 단기 여행과 출장, 월렌트, 법인 장기 이용에 맞춰 차량·기간·보험 조건을 빠르게 정리합니다.</p>
                 </div>
             </div>
 
-            <div class="hero-content">
-                <div class="hero-header">
-                    <p class="label" style="margin-bottom: 16px;">Premium Experience</p>
-                    <h1>원하는 순간,<br>가장 편한 이동을<br>예약하세요</h1>
-                    <p>로드인은 엄격한 차량 관리와 프리미엄 서비스를 통해 당신의 여정에 품격과 안전을 더합니다. 단순한 이동을 넘어선 최상의 경험을 선사합니다.</p>
+            <aside class="booking-panel" aria-label="빠른 차량 조회">
+                <div>
+                    <p class="eyebrow">빠른 차량 조회</p>
+                    <h2>원하는 조건을 선택하면 아래 차량 목록이 바로 좁혀집니다.</h2>
                 </div>
-
-                <div class="search-container">
-                    <div class="search-grid">
-                        <div class="search-item">
-                            <span class="label">01 / 대여 지역</span>
-                            <input type="text" placeholder="인천공항, 서울역, 제주공항 등">
-                        </div>
-                        <div class="search-item">
-                            <span class="label">02 / 차량 유형</span>
-                            <select>
-                                <option disabled selected>선택하세요</option>
-                                <option>경차 / 소형</option>
-                                <option>세단 / 프리미엄</option>
-                                <option>SUV / 레저</option>
-                                <option>승합 / 다인승</option>
-                                <option>전기차 (EV)</option>
-                            </select>
-                        </div>
-                        <div class="search-item">
-                            <span class="label">03 / 대여일</span>
-                            <input type="text" placeholder="날짜 및 시간 선택" onfocus="(this.type='datetime-local')">
-                        </div>
-                        <div class="search-item">
-                            <span class="label">04 / 반납일</span>
-                            <input type="text" placeholder="날짜 및 시간 선택" onfocus="(this.type='datetime-local')">
-                        </div>
-                        <div class="search-actions">
-                            <button class="btn-primary">차량 조회하기</button>
-                            <button class="btn-secondary">예약 상담하기</button>
-                        </div>
+                <div class="booking-grid">
+                    <div class="field">
+                        <label for="region">대여 지역</label>
+                        <select id="region">
+                            <option>지역 협의</option>
+                            <option>공항 인수 상담</option>
+                            <option>역/터미널 인수 상담</option>
+                            <option>장기렌트 방문 상담</option>
+                        </select>
                     </div>
-
-                    <div class="trust-banner">
-                        <div class="trust-item">
-                            <div class="dot"></div>
-                            <span>전 차량 정기 점검 완료</span>
-                        </div>
-                        <div class="trust-item">
-                            <div class="dot"></div>
-                            <span>공항/역 인수 가능</span>
-                        </div>
-                        <div class="trust-item">
-                            <div class="dot"></div>
-                            <span>완전 자차 옵션 가능</span>
-                        </div>
+                    <div class="field">
+                        <label for="maker">제조사</label>
+                        <select id="maker">
+                            <option value="all">전체 제조사</option>
+                            <option value="hyundai">현대</option>
+                            <option value="kia">기아</option>
+                            <option value="bmw">BMW</option>
+                            <option value="benz">벤츠</option>
+                            <option value="audi">아우디</option>
+                            <option value="kgm">KG모빌리티(쌍용)</option>
+                            <option value="renault">르노코리아</option>
+                            <option value="chevrolet">쉐보레</option>
+                            <option value="ford">포드</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="category">차량 유형</label>
+                        <select id="category">
+                            <option value="all">전체 차량</option>
+                            <option value="compact">경차/소형</option>
+                            <option value="sedan">세단</option>
+                            <option value="suv">SUV/RV</option>
+                            <option value="van">승합/리무진</option>
+                            <option value="sports">스포츠/쿠페</option>
+                            <option value="ev">전기차</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="startDate">대여일</label>
+                        <input id="startDate" type="datetime-local">
+                    </div>
+                    <div class="field">
+                        <label for="endDate">반납일</label>
+                        <input id="endDate" type="datetime-local">
                     </div>
                 </div>
-            </div>
-
-            <div class="metrics-bar">
-                <div class="metric-card">
-                    <span class="metric-label">Active Fleet</span>
-                    <span class="metric-value">120+</span>
+                <div class="booking-actions">
+                    <button class="btn primary" id="searchBtn">차량 조회</button>
+                    <a class="btn" href="#consult" style="display:grid;place-items:center;">견적 상담</a>
                 </div>
-                <div class="metric-card">
-                    <span class="metric-label">Availability</span>
-                    <span class="metric-value">365</span>
+                <div class="notice" id="estimateBox">
+                    표시 요금은 공개 요금표와 가격비교 데이터를 참고한 상담 전 기준가입니다. 실제 확정가는 지역, 날짜, 보험, 성수기, 차량 연식에 따라 달라집니다.
                 </div>
-                <div class="metric-card">
-                    <span class="metric-label">Inspection</span>
-                    <span class="metric-value">100%</span>
-                </div>
-                <div class="metric-card">
-                    <span class="metric-label">Solution</span>
-                    <span class="metric-value">A to Z</span>
-                </div>
-            </div>
+            </aside>
         </section>
 
-        <!-- Vehicle Types -->
-        <section class="section" id="vehicles">
-            <p class="label">Vehicle Categories</p>
-            <h2 class="section-title">목적에 맞는 차량을 빠르게 찾으세요</h2>
-            <p class="section-sub">혼자 떠나는 여행부터 가족 이동, 비즈니스 출장, 장기 이용까지 필요한 상황에 맞춰 가장 적합한 차량 유형을 바로 확인할 수 있습니다.</p>
-            <div class="vehicle-grid">
-                <div class="vehicle-card">
-                    <h3>경차</h3>
-                    <p>합리적인 비용으로 도심 이동과 짧은 여행에 적합한 차량입니다.</p>
-                    <span class="btn-text">경차 보기</span>
-                </div>
-                <div class="vehicle-card">
-                    <h3>세단</h3>
-                    <p>출장, 데이트, 가족 이동까지 가장 균형 잡힌 선택입니다.</p>
-                    <span class="btn-text">세단 보기</span>
-                </div>
-                <div class="vehicle-card">
-                    <h3>SUV</h3>
-                    <p>넓은 적재 공간과 안정적인 주행감으로 여행에 잘 맞습니다.</p>
-                    <span class="btn-text">SUV 보기</span>
-                </div>
-                <div class="vehicle-card">
-                    <h3>승합</h3>
-                    <p>단체 이동, 가족 여행, 공항 픽업에 적합한 넉넉한 차량입니다.</p>
-                    <span class="btn-text">승합 보기</span>
-                </div>
-                <div class="vehicle-card">
-                    <h3>전기차</h3>
-                    <p>조용하고 효율적인 주행을 원하는 고객을 위한 친환경 선택입니다.</p>
-                    <span class="btn-text">전기차 보기</span>
-                </div>
-                <div class="vehicle-card">
-                    <h3>수입차</h3>
-                    <p>특별한 일정과 프리미엄 이동 경험을 위한 고급 차량입니다.</p>
-                    <span class="btn-text">수입차 보기</span>
-                </div>
-            </div>
-            <div class="section-actions" style="margin-top: 30px;">
-                <button class="btn-fill">전체 차량 보기</button>
-            </div>
+        <section class="metrics" aria-label="서비스 핵심 정보">
+            <div class="metric"><strong>59대+</strong><span>국산·수입 표시 재고</span></div>
+            <div class="metric"><strong>5개</strong><span>공개 요금 출처 참고</span></div>
+            <div class="metric"><strong>1일~월렌트</strong><span>기간별 상담 가능</span></div>
+            <div class="metric"><strong>보험 선택</strong><span>일반/완전 자차 안내</span></div>
         </section>
 
-        <!-- Popular Cars -->
-        <section class="section" id="popular">
-            <p class="label">Best Choice</p>
-            <h2 class="section-title">가장 많이 선택되는 ROADIN 인기 차량</h2>
-            <p class="section-sub">이용 목적과 예산에 따라 고객들이 자주 선택하는 대표 차량을 모았습니다. 일일 요금, 탑승 인원, 연료 타입을 한눈에 비교해보세요.</p>
-            <div class="car-grid">
-                <div class="car-card">
-                    <div class="car-img">아반떼 CN7</div>
-                    <div class="car-info">
-                        <h4>아반떼 CN7</h4>
-                        <p>부담 없는 요금과 안정적인 주행감의 기본 세단입니다.</p>
-                        <span class="car-meta">5인승 / 가솔린 / 후방카메라</span>
-                        <span class="car-price">1일 59,000원부터</span>
-                        <button class="car-btn">예약 문의</button>
+        <section class="section" id="inventory">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Multi brand vehicle inventory</p>
+                    <h2>브랜드별 차량 재고판</h2>
+                    <p>현대·기아부터 BMW, 벤츠, 아우디, KG모빌리티, 르노코리아, 쉐보레, 포드 머스탱까지 제조사와 차급을 조합해 검색할 수 있도록 구성했습니다.</p>
+                </div>
+            </div>
+
+            <div class="filter-groups" aria-label="차량 필터">
+                <div class="filter-group">
+                    <span class="filter-label">제조사</span>
+                    <div class="filters">
+                        <button class="filter-btn active" data-maker="all">전체</button>
+                        <button class="filter-btn" data-maker="hyundai">현대</button>
+                        <button class="filter-btn" data-maker="kia">기아</button>
+                        <button class="filter-btn" data-maker="bmw">BMW</button>
+                        <button class="filter-btn" data-maker="benz">벤츠</button>
+                        <button class="filter-btn" data-maker="audi">아우디</button>
+                        <button class="filter-btn" data-maker="kgm">KG모빌리티</button>
+                        <button class="filter-btn" data-maker="renault">르노코리아</button>
+                        <button class="filter-btn" data-maker="chevrolet">쉐보레</button>
+                        <button class="filter-btn" data-maker="ford">포드</button>
                     </div>
                 </div>
-                <div class="car-card">
-                    <div class="car-img">쏘나타 DN8</div>
-                    <div class="car-info">
-                        <h4>쏘나타 DN8</h4>
-                        <p>출장과 가족 이동에 모두 어울리는 중형 세단입니다.</p>
-                        <span class="car-meta">5인승 / LPG / 스마트키</span>
-                        <span class="car-price">1일 79,000원부터</span>
-                        <button class="car-btn">예약 문의</button>
-                    </div>
-                </div>
-                <div class="car-card">
-                    <div class="car-img">그랜저 GN7</div>
-                    <div class="car-info">
-                        <h4>그랜저 GN7</h4>
-                        <p>중요한 일정에 어울리는 고급 세단입니다.</p>
-                        <span class="car-meta">5인승 / 가솔린 / 통풍시트</span>
-                        <span class="car-price">1일 119,000원부터</span>
-                        <button class="car-btn">예약 문의</button>
-                    </div>
-                </div>
-                <div class="car-card">
-                    <div class="car-img">쏘렌토</div>
-                    <div class="car-info">
-                        <h4>쏘렌토</h4>
-                        <p>장거리 여행과 가족 이동에 강한 프리미엄 SUV입니다.</p>
-                        <span class="car-meta">5인승 / 디젤 / 넓은 트렁크</span>
-                        <span class="car-price">1일 129,000원부터</span>
-                        <button class="car-btn">예약 문의</button>
-                    </div>
-                </div>
-                <div class="car-card">
-                    <div class="car-img">카니발</div>
-                    <div class="car-info">
-                        <h4>카니발</h4>
-                        <p>단체 이동과 공항 픽업에 가장 많이 선택되는 승합 차량입니다.</p>
-                        <span class="car-meta">9인승 / 디젤 / 넓은 실내</span>
-                        <span class="car-price">1일 159,000원부터</span>
-                        <button class="car-btn">예약 문의</button>
-                    </div>
-                </div>
-                <div class="car-card">
-                    <div class="car-img">아이오닉 5</div>
-                    <div class="car-info">
-                        <h4>아이오닉 5</h4>
-                        <p>조용하고 세련된 전기차 주행 경험을 제공합니다.</p>
-                        <span class="car-meta">5인승 / 전기 / 고속 충전</span>
-                        <span class="car-price">1일 139,000원부터</span>
-                        <button class="car-btn">예약 문의</button>
+                <div class="filter-group">
+                    <span class="filter-label">차량 유형</span>
+                    <div class="filters">
+                        <button class="filter-btn active" data-filter="all">전체</button>
+                        <button class="filter-btn" data-filter="compact">경차/소형</button>
+                        <button class="filter-btn" data-filter="sedan">세단</button>
+                        <button class="filter-btn" data-filter="suv">SUV/RV</button>
+                        <button class="filter-btn" data-filter="van">승합/리무진</button>
+                        <button class="filter-btn" data-filter="sports">스포츠/쿠페</button>
+                        <button class="filter-btn" data-filter="ev">전기차</button>
                     </div>
                 </div>
             </div>
-            <div class="section-actions">
-                <button class="btn-fill">인기 차량 전체보기</button>
-                <button>예약 가능 차량 확인</button>
+
+            <div class="inventory" id="inventoryGrid"></div>
+        </section>
+
+        <section class="section alt" id="rates">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Market based rate table</p>
+                    <h2>공개 요금 기반 표시가</h2>
+                    <p>대형 렌터카 정가, 여행 가격비교 평균가, 제주 최저가, 장기렌트 공식 조건을 함께 보고 너무 낮거나 높은 값은 피해서 상담용 기준가로 정리했습니다.</p>
+                </div>
+            </div>
+
+            <div class="rate-board">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>차급</th>
+                            <th>대표 차량</th>
+                            <th>표시 1일 기준가</th>
+                            <th>월렌트 상담가</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>경차/소형</td><td>캐스퍼, 모닝, 레이, 스파크</td><td>52,000원~</td><td>620,000원~</td></tr>
+                        <tr><td>국산 세단</td><td>아반떼, K5, 쏘나타, SM6</td><td>72,000원~</td><td>860,000원~</td></tr>
+                        <tr><td>국산 SUV/RV</td><td>투싼, 쏘렌토, 토레스, QM6</td><td>82,000원~</td><td>980,000원~</td></tr>
+                        <tr><td>승합/대형</td><td>카니발, 스타리아, 타호</td><td>159,000원~</td><td>1,790,000원~</td></tr>
+                        <tr><td>수입 세단/SUV</td><td>BMW 5시리즈, 벤츠 E클래스, 아우디 A6/Q5</td><td>170,000원~</td><td>1,980,000원~</td></tr>
+                        <tr><td>스포츠/쿠페</td><td>포드 머스탱, 머스탱 컨버터블</td><td>260,000원~</td><td>3,150,000원~</td></tr>
+                        <tr><td>전기차</td><td>아이오닉 5, EV6, EQA, Q8 e-tron</td><td>92,000원~</td><td>1,160,000원~</td></tr>
+                    </tbody>
+                </table>
+
+                <aside class="source-box">
+                    <h3>요금 산정 참고 출처</h3>
+                    <ul>
+                        <li><a href="https://www.lotterentacar.net/hp/kor/reservation/shortInfo/pay.do" target="_blank" rel="noreferrer">롯데렌터카 단기 요금표</a>: 아반떼, K5, 카니발 등 공식 기준 요금</li>
+                        <li><a href="https://www.skyscanner.co.kr/car-hire-in/car-hire-in-jeju/39499832.html" target="_blank" rel="noreferrer">스카이스캐너 제주 렌터카</a>: K5 최저가와 월별 평균가</li>
+                        <li><a href="https://kr.trip.com/carhire/supplier/lotte-rent-a-car-sd15258/" target="_blank" rel="noreferrer">트립닷컴 롯데렌터카</a>: 최근 1일 평균 대여 요금</li>
+                        <li><a href="https://kr.trip.com/carhire/supplier/sk-rent-a-car-sd2113/" target="_blank" rel="noreferrer">트립닷컴 SK렌터카</a>: 최근 1일 평균 대여 요금</li>
+                        <li><a href="https://rental.kia.com/pc/longRent" target="_blank" rel="noreferrer">기아렌터카 장기렌트</a>: 48개월, 연 2만km 등 장기렌트 산정 조건</li>
+                    </ul>
+                </aside>
             </div>
         </section>
 
-        <!-- Benefits -->
-        <section class="section" id="benefits">
-            <p class="label">Why ROADIN</p>
-            <h2 class="section-title">렌터카 선택의 기준을 더 분명하게</h2>
-            <p class="section-sub">ROADIN RENTCAR는 단순히 차량을 빌려주는 곳이 아니라, 고객이 안심하고 이동할 수 있도록 차량 관리, 보험 선택, 인수 편의, 상담 품질까지 함께 관리합니다.</p>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <h3>전 차량 금연 관리</h3>
-                    <p>쾌적한 실내 상태를 위해 모든 차량을 금연 차량으로 운영하고 출고 전 실내 컨디션을 확인합니다.</p>
-                </div>
-                <div class="benefit-card">
-                    <h3>출고 전 정기 점검</h3>
-                    <p>타이어, 브레이크, 램프, 오일류 등 기본 점검을 완료한 차량만 고객에게 배정합니다.</p>
-                </div>
-                <div class="benefit-card">
-                    <h3>완전자차 옵션</h3>
-                    <p>운전이 낯선 지역에서도 부담을 줄일 수 있도록 보험 옵션을 선택할 수 있습니다.</p>
-                </div>
-                <div class="benefit-card">
-                    <h3>공항·역 인수 가능</h3>
-                    <p>공항, 기차역, 주요 거점에서 차량 인수 상담이 가능해 이동 동선을 줄일 수 있습니다.</p>
-                </div>
-                <div class="benefit-card">
-                    <h3>24시간 상담 접수</h3>
-                    <p>늦은 도착, 일정 변경, 긴급 문의에도 빠르게 대응할 수 있도록 상담 접수 채널을 운영합니다.</p>
-                </div>
-                <div class="benefit-card">
-                    <h3>장기 대여 맞춤 견적</h3>
-                    <p>일주일 이상 이용하거나 법인 차량이 필요한 고객에게 기간별 맞춤 견적을 안내합니다.</p>
+        <section class="section">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">How it works</p>
+                    <h2>예약 흐름</h2>
+                    <p>전화번호와 지점이 미정인 상태에서도 실제 홈페이지처럼 자연스럽게 상담 전환이 되도록 절차를 명확히 했습니다.</p>
                 </div>
             </div>
-            <div class="highlight-bar">차량 상태부터 반납까지, 렌트 전 과정이 깔끔해야 진짜 프리미엄입니다.</div>
-        </section>
-
-        <!-- Promotions -->
-        <section class="section" id="promotions">
-            <p class="label">Promotions</p>
-            <h2 class="section-title">지금 이용 가능한 ROADIN 프로모션</h2>
-            <p class="section-sub">여행 일정, 장기 이용, 공항 인수 등 이용 방식에 따라 더 합리적인 혜택을 선택할 수 있습니다.</p>
-            <div class="promo-grid">
-                <div class="promo-card">
-                    <span class="promo-badge">WEEKDAY SALE</span>
-                    <h3>주중 렌트 할인</h3>
-                    <p>월요일부터 목요일까지 이용하는 고객에게 합리적인 주중 요금을 제공합니다.</p>
-                    <button class="promo-btn">할인 차량 보기</button>
-                </div>
-                <div class="promo-card">
-                    <span class="promo-badge">LONG RENT</span>
-                    <h3>장기 대여 특별가</h3>
-                    <p>7일 이상 이용 고객을 위한 기간별 맞춤 요금 혜택입니다.</p>
-                    <button class="promo-btn">장기 견적 문의</button>
-                </div>
-                <div class="promo-card">
-                    <span class="promo-badge">AIRPORT PICKUP</span>
-                    <h3>공항 인수 패키지</h3>
-                    <p>공항 도착 후 바로 차량을 인수할 수 있도록 상담과 배정을 도와드립니다.</p>
-                    <button class="promo-btn">공항 렌트 문의</button>
-                </div>
-                <div class="promo-card">
-                    <span class="promo-badge">FIRST RENT</span>
-                    <h3>신규 고객 쿠폰</h3>
-                    <p>ROADIN RENTCAR를 처음 이용하는 고객에게 첫 예약 혜택을 제공합니다.</p>
-                    <button class="promo-btn">쿠폰 확인하기</button>
-                </div>
-            </div>
-            <p class="promo-note">프로모션은 차량 재고, 이용 기간, 인수 지점에 따라 적용 여부가 달라질 수 있습니다. 정확한 요금은 예약 상담 시 안내됩니다.</p>
-            <div class="section-actions" style="margin-top: 30px;">
-                <button class="btn-fill">진행 중인 혜택 보기</button>
-                <button>내 일정으로 견적받기</button>
+            <div class="steps">
+                <div class="info-card"><strong>01</strong><h3>조건 선택</h3><p>지역, 대여일, 반납일, 차량 유형을 선택합니다.</p></div>
+                <div class="info-card"><strong>02</strong><h3>차량 비교</h3><p>표시 재고에서 요금, 인승, 연료, 옵션을 확인합니다.</p></div>
+                <div class="info-card"><strong>03</strong><h3>상담 접수</h3><p>희망 차량과 일정을 남기면 가능 여부를 확인합니다.</p></div>
+                <div class="info-card"><strong>04</strong><h3>예약 확정</h3><p>보험, 인수 장소, 결제 조건을 안내받은 뒤 확정합니다.</p></div>
             </div>
         </section>
 
-        <!-- Search UX -->
-        <section class="section" id="search">
-            <p class="label">Smart Search</p>
-            <h2 class="section-title">필요한 조건만 선택하면 예약 가능한 차량이 보입니다</h2>
-            <p class="section-sub">복잡한 문의 없이 지역, 날짜, 차량 유형, 보험 옵션을 선택해 원하는 조건의 차량을 빠르게 비교할 수 있도록 구성합니다.</p>
-            <div class="search-grid" style="margin-top: 0; max-width: 900px;">
-                <div class="search-item">
-                    <span class="label">대여 지역</span>
-                    <input type="text" placeholder="인천공항, 서울역, 제주공항 등">
-                </div>
-                <div class="search-item">
-                    <span class="label">차량 유형</span>
-                    <select>
-                        <option disabled selected>선택하세요</option>
-                        <option>경차 / 소형</option>
-                        <option>세단 / 프리미엄</option>
-                        <option>SUV / 레저</option>
-                        <option>승합 / 다인승</option>
-                        <option>전기차 (EV)</option>
-                    </select>
-                </div>
-                <div class="search-item">
-                    <span class="label">대여일</span>
-                    <input type="text" placeholder="날짜 및 시간 선택" onfocus="(this.type='datetime-local')">
-                </div>
-                <div class="search-item">
-                    <span class="label">반납일</span>
-                    <input type="text" placeholder="날짜 및 시간 선택" onfocus="(this.type='datetime-local')">
-                </div>
-                <div class="search-actions">
-                    <button class="btn-primary">차량 조회하기</button>
-                    <button class="btn-secondary">예약 상담하기</button>
+        <section class="section alt" id="guide">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Rental guide</p>
+                    <h2>대여 조건과 보험 안내</h2>
+                    <p>실제 렌터카 고객이 예약 전 확인하는 내용을 먼저 보여줘 상담 품질과 신뢰감을 높입니다.</p>
                 </div>
             </div>
-            <div style="margin-top: 40px; padding: 40px; border: 1px solid var(--border);">
-                <p class="label" style="margin-bottom: 20px;">검색 안내</p>
-                <p style="font-size: 14px; color: var(--grey); line-height: 1.6; margin-bottom: 8px;">선택한 조건에 맞는 차량을 확인하세요.</p>
-                <p style="font-size: 14px; color: var(--grey); line-height: 1.6; margin-bottom: 8px;">예약 가능 여부는 상담 확정 시 최종 안내됩니다.</p>
-                <p style="font-size: 14px; color: var(--grey); line-height: 1.6;">요금은 대여 기간과 보험 옵션에 따라 달라질 수 있습니다.</p>
-            </div>
-        </section>
-
-        <!-- Process -->
-        <section class="section" id="process">
-            <p class="label">How It Works</p>
-            <h2 class="section-title">처음 이용해도 간단한 ROADIN 대여 절차</h2>
-            <p class="section-sub">차량 선택부터 반납까지 필요한 과정을 단계별로 안내해 처음 렌터카를 이용하는 고객도 부담 없이 예약할 수 있습니다.</p>
-            <div class="process-grid">
-                <div class="process-card">
-                    <span class="process-num">01</span>
-                    <h3>차량 선택</h3>
-                    <p>이용 지역, 날짜, 인원에 맞는 차량을 선택합니다.</p>
-                </div>
-                <div class="process-card">
-                    <span class="process-num">02</span>
-                    <h3>예약 신청</h3>
-                    <p>원하는 차량과 일정으로 예약 문의를 접수합니다.</p>
-                </div>
-                <div class="process-card">
-                    <span class="process-num">03</span>
-                    <h3>상담 확인</h3>
-                    <p>담당자가 차량 가능 여부, 요금, 보험 옵션을 안내합니다.</p>
-                </div>
-                <div class="process-card">
-                    <span class="process-num">04</span>
-                    <h3>결제 진행</h3>
-                    <p>예약 확정 후 안내된 방식으로 결제를 진행합니다.</p>
-                </div>
-                <div class="process-card">
-                    <span class="process-num">05</span>
-                    <h3>차량 인수</h3>
-                    <p>지점 또는 협의된 장소에서 차량 상태를 확인하고 인수합니다.</p>
-                </div>
-                <div class="process-card">
-                    <span class="process-num">06</span>
-                    <h3>차량 반납</h3>
-                    <p>이용 종료 후 지정된 장소와 시간에 차량을 반납합니다.</p>
-                </div>
-            </div>
-            <div class="section-actions" style="margin-top: 40px;">
-                <button class="btn-fill">대여 절차 자세히 보기</button>
-                <button>지금 예약 상담하기</button>
-            </div>
-        </section>
-
-        <!-- Reviews -->
-        <section class="section" id="reviews">
-            <p class="label">Reviews</p>
-            <h2 class="section-title">ROADIN을 이용한 고객들의 실제 만족 포인트</h2>
-            <p class="section-sub">차량 상태, 상담 속도, 인수 편의성, 요금 투명성은 렌터카 서비스 선택에서 가장 중요한 기준입니다.</p>
-            <div class="review-grid">
-                <div class="review-card">
-                    <span class="review-tag">제주 여행 고객</span>
-                    <h3>차량 상태가 깔끔해서 여행 시작이 좋았습니다</h3>
-                    <p>공항 도착 시간에 맞춰 안내를 받아서 바로 이동할 수 있었습니다. 차량 내부도 깨끗했고 요금 설명도 명확했습니다.</p>
-                </div>
-                <div class="review-card">
-                    <span class="review-tag">출장 고객</span>
-                    <h3>갑작스러운 일정에도 빠르게 배정받았습니다</h3>
-                    <p>전날 저녁에 문의했는데 가능한 차량을 바로 안내받았습니다. 비즈니스 일정에 맞춰 이용하기 좋았습니다.</p>
-                </div>
-                <div class="review-card">
-                    <span class="review-tag">가족 여행 고객</span>
-                    <h3>카니발 대여로 가족 이동이 편했습니다</h3>
-                    <p>짐이 많았는데 공간이 넉넉했고 아이들과 이동하기 편했습니다. 보험 옵션도 자세히 설명해줘서 안심됐습니다.</p>
-                </div>
-                <div class="review-card">
-                    <span class="review-tag">장기 이용 고객</span>
-                    <h3>장기 렌트 견적이 합리적이었습니다</h3>
-                    <p>일주일 이상 이용할 차량이 필요했는데 기간에 맞춰 견적을 안내받아 비용 부담을 줄일 수 있었습니다.</p>
-                </div>
-            </div>
-            <div class="section-actions" style="margin-top: 40px;">
-                <button class="btn-fill">이용 후기 더보기</button>
-                <button>내 일정 상담하기</button>
-            </div>
-        </section>
-
-        <!-- Guide -->
-        <section class="section" id="guide">
-            <p class="label">Rental Guide</p>
-            <h2 class="section-title">예약 전 꼭 확인해야 할 보험 및 대여 안내</h2>
-            <p class="section-sub">안전한 이용을 위해 보험 범위, 운전자 조건, 인수 및 반납 기준을 미리 확인하세요. ROADIN RENTCAR는 예약 상담 시 고객의 일정과 운전 환경에 맞는 옵션을 안내합니다.</p>
             <div class="guide-grid">
-                <div class="guide-card">
-                    <h3>대여 조건</h3>
-                    <p>운전면허증을 소지한 만 21세 이상 고객을 기준으로 상담이 진행됩니다. 차량 등급에 따라 조건이 달라질 수 있습니다.</p>
-                </div>
-                <div class="guide-card">
-                    <h3>보험 안내</h3>
-                    <p>기본 보험이 포함되며, 사고 부담을 줄일 수 있는 완전자차 옵션을 선택할 수 있습니다.</p>
-                </div>
-                <div class="guide-card">
-                    <h3>인수 안내</h3>
-                    <p>차량 인수 전 외관, 연료, 주행거리, 주요 옵션을 함께 확인합니다.</p>
-                </div>
-                <div class="guide-card">
-                    <h3>반납 안내</h3>
-                    <p>예약된 시간과 장소에 맞춰 차량을 반납해야 하며, 지연 시 추가 요금이 발생할 수 있습니다.</p>
-                </div>
-                <div class="guide-card">
-                    <h3>연료 기준</h3>
-                    <p>인수 시 확인한 연료량 기준으로 반납하는 것을 원칙으로 합니다.</p>
-                </div>
-                <div class="guide-card">
-                    <h3>사고 발생 시</h3>
-                    <p>사고 또는 차량 이상 발생 시 즉시 ROADIN 상담 채널로 연락해야 합니다.</p>
-                </div>
-            </div>
-            <div class="highlight-bar" style="margin-top: 40px;">보험과 대여 조건은 예약 확정 전에 한 번 더 안내드립니다.</div>
-            <div class="section-actions" style="margin-top: 30px;">
-                <button class="btn-fill">보험 옵션 문의하기</button>
-                <button>대여 조건 확인하기</button>
+                <div class="info-card"><h3>운전자 조건</h3><p>기본 만 21세 이상, 면허 취득 1년 이상 기준으로 안내합니다. 차량 등급과 보험 옵션에 따라 조건은 달라질 수 있습니다.</p></div>
+                <div class="info-card"><h3>보험 선택</h3><p>기본 보험, 일반자차, 완전자차 등 선택 가능 여부를 차량별로 상담합니다. 면책금과 보상 한도는 예약 확정 전 고지합니다.</p></div>
+                <div class="info-card"><h3>인수/반납</h3><p>지점, 공항, 역, 터미널 등 인수 가능 장소는 운영 지역 확정 후 반영합니다. 야간 인수는 추가 비용이 발생할 수 있습니다.</p></div>
+                <div class="info-card"><h3>추가 요금</h3><p>반납 지연, 연료 부족, 운전자 추가, 편도 반납, 성수기 요금은 상담 단계에서 별도 확인합니다.</p></div>
             </div>
         </section>
 
-        <!-- FAQ -->
-        <section class="section" id="faq">
-            <p class="label">FAQ</p>
-            <h2 class="section-title">자주 묻는 질문</h2>
-            <p class="section-sub">예약 전 고객들이 가장 많이 궁금해하는 내용을 정리했습니다. 자세한 조건은 차량과 일정에 따라 달라질 수 있으므로 상담을 통해 최종 확인해 주세요.</p>
-            <div class="faq-list" id="faqList">
-                <div class="faq-item">
-                    <h3>예약은 어떻게 진행되나요?</h3>
-                    <p>차량과 일정을 선택해 문의를 남기면 담당자가 가능 여부와 요금을 확인한 뒤 예약 절차를 안내합니다.</p>
+        <section class="section" id="consult">
+            <div class="consult">
+                <div class="consult-card">
+                    <div>
+                        <p class="eyebrow" style="color:#b9cdf5;">Estimate request</p>
+                        <h2>차량, 날짜, 지역만 남기면 상담용 견적을 정리합니다.</h2>
+                        <p>전화번호와 카카오 채널이 확정되면 이 영역의 버튼을 실제 연락 링크로 연결하면 됩니다. 지금은 접수 폼 예시로 구성했습니다.</p>
+                    </div>
+                    <div>
+                        <p>운영시간 예시: 매일 09:00 - 22:00<br>상담 채널: 전화 / 카카오톡 / 문자 연결 예정</p>
+                    </div>
                 </div>
-                <div class="faq-item">
-                    <h3>당일 예약도 가능한가요?</h3>
-                    <p>차량 재고가 있는 경우 당일 예약도 가능합니다. 다만 성수기나 주말에는 조기 마감될 수 있습니다.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>공항에서 차량을 받을 수 있나요?</h3>
-                    <p>공항 및 주요 거점 인수는 지점과 일정에 따라 상담 후 안내됩니다.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>완전자차 보험을 선택할 수 있나요?</h3>
-                    <p>차량 등급과 일정에 따라 완전자차 옵션 선택이 가능합니다. 상담 시 적용 가능 여부를 확인해드립니다.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>장기 대여도 가능한가요?</h3>
-                    <p>7일 이상 이용하거나 법인 차량이 필요한 경우 별도 견적을 안내합니다.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>차량 반납 시간을 변경할 수 있나요?</h3>
-                    <p>예약 상황에 따라 변경 가능 여부가 달라집니다. 변경이 필요할 경우 사전에 상담 채널로 문의해 주세요.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>운전자를 추가할 수 있나요?</h3>
-                    <p>추가 운전자 등록은 면허 조건 확인 후 가능합니다. 예약 상담 시 함께 요청해 주세요.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>반려동물 동반이 가능한가요?</h3>
-                    <p>차량 관리 기준에 따라 제한될 수 있습니다. 필요한 경우 예약 전 별도 문의가 필요합니다.</p>
-                </div>
+
+                <form class="consult-form" id="consultForm">
+                    <div class="field">
+                        <label for="name">이름</label>
+                        <input id="name" placeholder="홍길동">
+                    </div>
+                    <div class="field">
+                        <label for="contact">연락처</label>
+                        <input id="contact" placeholder="연락처 입력">
+                    </div>
+                    <div class="field">
+                        <label for="wantedCar">희망 차량</label>
+                        <input id="wantedCar" placeholder="예: K5, 카니발, 쏘렌토">
+                    </div>
+                    <div class="field">
+                        <label for="period">이용 기간</label>
+                        <select id="period">
+                            <option>1일 단기렌트</option>
+                            <option>2~6일 여행/출장</option>
+                            <option>7일 이상 주렌트</option>
+                            <option>1개월 이상 월렌트</option>
+                            <option>12개월 이상 장기렌트</option>
+                        </select>
+                    </div>
+                    <div class="wide">
+                        <textarea id="message" placeholder="대여 지역, 대여일, 반납일, 보험 희망 조건을 적어주세요."></textarea>
+                    </div>
+                    <button class="btn primary wide" type="submit">견적 상담 접수하기</button>
+                    <div class="result-note" id="formNote">접수 폼 예시가 확인되었습니다. 실제 운영 시에는 문자, 카카오톡, 이메일, 구글폼 또는 DB 저장 방식으로 연결하면 됩니다.</div>
+                </form>
             </div>
         </section>
-
-        <!-- CTA -->
-        <section class="cta-section" id="cta">
-            <h2>지금 필요한 차량을 ROADIN에서 확인하세요</h2>
-            <p>여행, 출장, 장기 이용, 공항 픽업까지 목적에 맞는 차량을 빠르게 안내해드립니다. 원하는 일정과 지역을 남겨주시면 가능한 차량과 예상 요금을 확인해드리겠습니다.</p>
-            <div class="cta-btns">
-                <button class="btn-white">지금 차량 확인하기</button>
-                <button class="btn-outline">전화 상담하기</button>
-                <button class="btn-outline">카카오톡 상담하기</button>
-            </div>
-            <p class="cta-meta">상담 가능 시간: 매일 09:00 - 22:00</p>
-            <p class="cta-meta">빠른 상담을 위해 대여 지역, 대여일, 반납일, 희망 차량을 함께 남겨주세요.</p>
-        </section>
-
     </main>
 
-    <footer>
-        <div>
-            <div class="footer-brand">ROADIN</div>
-            <p class="footer-desc">프리미엄 차량 대여부터 장기 렌트 상담까지,<br>이동이 필요한 모든 순간을 더 편하게 연결합니다.</p>
-        </div>
-        <div class="footer-col">
-            <h4>Service</h4>
-            <a href="#">차량보기</a>
-            <a href="#">프로모션</a>
-            <a href="#">대여안내</a>
-            <a href="#">이용후기</a>
-        </div>
-        <div class="footer-col">
-            <h4>Company</h4>
-            <a href="#">회사소개</a>
-            <a href="#">예약문의</a>
-        </div>
-        <div class="footer-col">
-            <h4>Support</h4>
-            <a href="#">FAQ</a>
-            <a href="#">보험안내</a>
-            <a href="#">대여절차</a>
-        </div>
-        <div class="footer-bottom">
-            <span>© 2024 ROADIN RENTCAR. ALL RIGHTS RESERVED.</span>
-            <span class="label">Premium Mobility System v2.0</span>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <div class="brand" style="margin-bottom:12px;"><span class="brand-mark">R</span><span>ROADIN RENTCAR</span></div>
+                <p>국산·수입 차량 렌터카 예약 상담 홈페이지. 사업자 정보, 전화번호, 지점 주소는 확정 후 반영 예정입니다.</p>
+            </div>
+            <div>
+                <h4>차량</h4>
+                <a href="#inventory">전체 차량 보기</a><br>
+                <a href="#rates">요금 기준</a>
+            </div>
+            <div>
+                <h4>안내</h4>
+                <a href="#guide">보험/대여 조건</a><br>
+                <a href="#consult">견적 상담</a>
+            </div>
+            <div>
+                <h4>회사 정보</h4>
+                <p>상호명, 대표자, 사업자등록번호, 주소, 개인정보처리방침 링크 반영 예정</p>
+            </div>
         </div>
     </footer>
 
+    <div class="mobile-bar">
+        <a href="#inventory">차량보기</a>
+        <a href="#consult">상담하기</a>
+    </div>
+
     <script>
-        const navToggle = document.getElementById('navToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        navToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
+        const makerThemes = {
+            hyundai: { label: '현대', color: '#0b4f8a' },
+            kia: { label: '기아', color: '#111111' },
+            bmw: { label: 'BMW', color: '#1c69d4' },
+            benz: { label: '벤츠', color: '#5b646b' },
+            audi: { label: '아우디', color: '#bb0a30' },
+            kgm: { label: 'KG모빌리티', color: '#7a4d22' },
+            renault: { label: '르노코리아', color: '#c49a20' },
+            chevrolet: { label: '쉐보레', color: '#b3831d' },
+            ford: { label: '포드', color: '#164f9f' }
+        };
+        const photo = {
+            compact: 'https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&q=80&w=900',
+            sedan: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&q=80&w=900',
+            suv: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&q=80&w=900',
+            van: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&q=80&w=900',
+            ev: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=900',
+            sports: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=900'
+        };
+        const v = (maker, name, trim, cat, seats, fuel, year, price, monthly, tag) => ({
+            maker, name, trim, cat, seats, fuel, year, price, monthly, tag, img: photo[cat]
         });
-        mobileMenu.querySelectorAll('a').forEach(a => {
-            a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        const vehicles = [
+            v('hyundai', '캐스퍼', '가솔린', 'compact', '4인승', '가솔린', '24~26년식', 59000, 690000, '도심 추천'),
+            v('hyundai', '아반떼', 'CN7 가솔린', 'sedan', '5인승', '가솔린', '24~26년식', 72000, 860000, '가성비'),
+            v('hyundai', '쏘나타', 'DN8 LPG', 'sedan', '5인승', 'LPG', '24~26년식', 85000, 990000, '출장 추천'),
+            v('hyundai', '그랜저', 'GN7 가솔린', 'sedan', '5인승', '가솔린', '24~26년식', 126000, 1450000, '프리미엄'),
+            v('hyundai', '베뉴', '소형 SUV', 'suv', '5인승', '가솔린', '23~25년식', 73000, 860000, '소형 SUV'),
+            v('hyundai', '코나', '가솔린', 'suv', '5인승', '가솔린', '24~26년식', 84000, 1050000, '여행 추천'),
+            v('hyundai', '투싼', '하이브리드', 'suv', '5인승', '하이브리드', '24~26년식', 112000, 1380000, '인기 SUV'),
+            v('hyundai', '싼타페', '하이브리드', 'suv', '5~7인승', '하이브리드', '24~26년식', 145000, 1740000, '가족 여행'),
+            v('hyundai', '아이오닉 5', '전기', 'ev', '5인승', '전기', '24~26년식', 118000, 1420000, 'EV 인기'),
+            v('hyundai', '스타리아', '11인승', 'van', '11인승', '디젤', '24~26년식', 165000, 1880000, '단체 이동'),
+
+            v('kia', '모닝', '가솔린', 'compact', '5인승', '가솔린', '24~26년식', 59000, 690000, '도심 추천'),
+            v('kia', '레이', '가솔린', 'compact', '5인승', '가솔린', '24~26년식', 63000, 740000, '공간 효율'),
+            v('kia', 'K3', '가솔린', 'compact', '5인승', '가솔린', '23~24년식', 69000, 820000, '가성비'),
+            v('kia', 'K5', '2.0 LPG', 'sedan', '5인승', 'LPG', '24~26년식', 86000, 990000, '인기 1순위'),
+            v('kia', 'K8', '2.5 가솔린', 'sedan', '5인승', '가솔린', '24~26년식', 124000, 1390000, '법인 선호'),
+            v('kia', '셀토스', '가솔린', 'suv', '5인승', '가솔린', '24~26년식', 84000, 1080000, '소형 SUV'),
+            v('kia', '스포티지', '하이브리드', 'suv', '5인승', '하이브리드', '24~26년식', 112000, 1390000, '인기 SUV'),
+            v('kia', '쏘렌토', '하이브리드', 'suv', '5~7인승', '하이브리드', '24~26년식', 145000, 1720000, '가족 여행'),
+            v('kia', '카니발', '9인승', 'van', '9인승', '디젤/HEV', '24~26년식', 179000, 1990000, '승합 인기'),
+            v('kia', 'EV6', '전기', 'ev', '5인승', '전기', '24~26년식', 130000, 1620000, '고속 충전'),
+
+            v('bmw', '320i', 'M Sport', 'sedan', '5인승', '가솔린', '23~25년식', 175000, 1980000, '수입 세단'),
+            v('bmw', '520i', 'Luxury', 'sedan', '5인승', '가솔린', '24~26년식', 235000, 2680000, '비즈니스'),
+            v('bmw', '530e', '플러그인 하이브리드', 'sedan', '5인승', 'PHEV', '23~25년식', 260000, 2980000, '고급 세단'),
+            v('bmw', 'X3', 'xDrive', 'suv', '5인승', '가솔린/디젤', '23~25년식', 245000, 2880000, '수입 SUV'),
+            v('bmw', 'X5', 'xDrive', 'suv', '5인승', '가솔린/디젤', '23~25년식', 340000, 3980000, '프리미엄 SUV'),
+            v('bmw', 'i4', '전기', 'ev', '5인승', '전기', '23~25년식', 250000, 3050000, '전기 세단'),
+
+            v('benz', 'C200', 'Avantgarde', 'sedan', '5인승', '가솔린', '23~25년식', 185000, 2100000, '수입 세단'),
+            v('benz', 'E250', 'Avantgarde', 'sedan', '5인승', '가솔린', '24~26년식', 250000, 2950000, '의전 추천'),
+            v('benz', 'E300', 'AMG Line', 'sedan', '5인승', '가솔린', '23~25년식', 285000, 3300000, '프리미엄'),
+            v('benz', 'GLC 300', '4MATIC', 'suv', '5인승', '가솔린', '23~25년식', 290000, 3400000, '수입 SUV'),
+            v('benz', 'GLE 450', '4MATIC', 'suv', '5인승', '가솔린', '23~25년식', 395000, 4650000, '대형 SUV'),
+            v('benz', 'EQA', '전기', 'ev', '5인승', '전기', '23~25년식', 235000, 2850000, '전기 SUV'),
+
+            v('audi', 'A4', '40 TFSI', 'sedan', '5인승', '가솔린', '23~25년식', 170000, 1980000, '수입 세단'),
+            v('audi', 'A6', '45 TFSI', 'sedan', '5인승', '가솔린', '23~25년식', 235000, 2750000, '비즈니스'),
+            v('audi', 'A7', 'Sportback', 'sedan', '5인승', '가솔린', '22~24년식', 310000, 3600000, '프리미엄'),
+            v('audi', 'Q3', '35 TDI', 'suv', '5인승', '디젤', '23~25년식', 190000, 2250000, '컴팩트 SUV'),
+            v('audi', 'Q5', '45 TFSI', 'suv', '5인승', '가솔린', '23~25년식', 255000, 3050000, '수입 SUV'),
+            v('audi', 'Q8 e-tron', '전기', 'ev', '5인승', '전기', '23~25년식', 345000, 4200000, '전기 SUV'),
+
+            v('kgm', '티볼리', '가솔린', 'suv', '5인승', '가솔린', '23~25년식', 72000, 860000, '소형 SUV'),
+            v('kgm', '코란도', '가솔린', 'suv', '5인승', '가솔린', '22~24년식', 79000, 950000, '가성비 SUV'),
+            v('kgm', '토레스', '가솔린', 'suv', '5인승', '가솔린', '24~26년식', 92000, 1180000, '인기 SUV'),
+            v('kgm', '토레스 EVX', '전기', 'ev', '5인승', '전기', '24~26년식', 108000, 1320000, '전기 SUV'),
+            v('kgm', '렉스턴', '디젤', 'suv', '5인승', '디젤', '23~25년식', 126000, 1480000, '대형 SUV'),
+            v('kgm', '렉스턴 스포츠', '픽업', 'suv', '5인승', '디젤', '23~25년식', 118000, 1390000, '레저/업무'),
+
+            v('renault', 'XM3', '하이브리드', 'suv', '5인승', '하이브리드', '23~25년식', 82000, 980000, '쿠페 SUV'),
+            v('renault', 'QM6', 'LPG', 'suv', '5인승', 'LPG', '23~25년식', 88000, 1050000, 'LPG SUV'),
+            v('renault', 'SM6', 'LPG', 'sedan', '5인승', 'LPG', '22~24년식', 78000, 920000, '중형 세단'),
+            v('renault', '아르카나', '하이브리드', 'suv', '5인승', '하이브리드', '24~26년식', 96000, 1150000, '신형 SUV'),
+            v('renault', '그랑 콜레오스', '하이브리드', 'suv', '5인승', '하이브리드', '25~26년식', 118000, 1420000, '패밀리 SUV'),
+
+            v('chevrolet', '스파크', '가솔린', 'compact', '5인승', '가솔린', '21~23년식', 52000, 620000, '저가형'),
+            v('chevrolet', '말리부', '가솔린', 'sedan', '5인승', '가솔린', '21~23년식', 79000, 940000, '중형 세단'),
+            v('chevrolet', '트랙스 크로스오버', '가솔린', 'suv', '5인승', '가솔린', '24~26년식', 82000, 980000, '신형 SUV'),
+            v('chevrolet', '트레일블레이저', '가솔린', 'suv', '5인승', '가솔린', '23~25년식', 86000, 1030000, '소형 SUV'),
+            v('chevrolet', '이쿼녹스', '가솔린', 'suv', '5인승', '가솔린', '22~24년식', 112000, 1340000, '중형 SUV'),
+            v('chevrolet', '타호', '대형 SUV', 'suv', '7인승', '가솔린', '22~25년식', 310000, 3650000, '대형 SUV'),
+
+            v('ford', '머스탱', '2.3 EcoBoost Coupe', 'sports', '4인승', '가솔린', '23~25년식', 260000, 3150000, '스포츠 쿠페'),
+            v('ford', '머스탱 컨버터블', '2.3 EcoBoost', 'sports', '4인승', '가솔린', '23~25년식', 320000, 3850000, '오픈카'),
+            v('ford', '익스플로러', '2.3 AWD', 'suv', '7인승', '가솔린', '23~25년식', 220000, 2650000, '수입 대형 SUV'),
+            v('ford', '브롱코', 'Outer Banks', 'suv', '5인승', '가솔린', '23~25년식', 300000, 3550000, '레저 SUV')
+        ];
+
+        const grid = document.getElementById('inventoryGrid');
+        const maker = document.getElementById('maker');
+        const category = document.getElementById('category');
+        const estimateBox = document.getElementById('estimateBox');
+        const won = value => value.toLocaleString('ko-KR') + '원';
+
+        let currentMaker = 'all';
+        let currentType = 'all';
+
+        function renderVehicles() {
+            const list = vehicles.filter(car => {
+                const makerMatch = currentMaker === 'all' || car.maker === currentMaker;
+                const typeMatch = currentType === 'all' || car.cat === currentType;
+                return makerMatch && typeMatch;
+            });
+            grid.innerHTML = list.map(car => `
+                <article class="car-card" style="--maker-color:${makerThemes[car.maker].color}">
+                    <div class="car-photo">
+                        <img src="${car.img}" alt="${car.name} 렌터카 이미지" loading="lazy">
+                        <div class="badge-row">
+                            <span class="badge ready">상담 가능</span>
+                            <span class="badge hot">${car.tag}</span>
+                        </div>
+                    </div>
+                    <div class="car-body">
+                        <span class="maker-chip">${makerThemes[car.maker].label}</span>
+                        <div class="car-title">
+                            <h3>${car.name}<br>${car.trim}</h3>
+                            <small>${car.year}</small>
+                        </div>
+                        <div class="chips">
+                            <span class="chip">${car.seats}</span>
+                            <span class="chip">${car.fuel}</span>
+                            <span class="chip">보험 선택</span>
+                        </div>
+                        <div class="price">
+                            <div><strong>${won(car.price)}~</strong><br><span>24시간 기준 표시가</span></div>
+                            <span>월 ${won(car.monthly)}~</span>
+                        </div>
+                        <div class="car-actions">
+                            <button type="button" data-car="${car.name} ${car.trim}">견적 문의</button>
+                            <button type="button" data-car="${car.name} ${car.trim}">상세 조건</button>
+                        </div>
+                    </div>
+                </article>
+            `).join('') || '<div class="notice" style="grid-column:1/-1;">조건에 맞는 표시 차량이 없습니다. 제조사 또는 차량 유형을 다시 선택해 주세요.</div>';
+            const makerText = currentMaker === 'all' ? '전체 제조사' : makerThemes[currentMaker].label;
+            const typeText = category.options[category.selectedIndex].text;
+            estimateBox.textContent = `${makerText} / ${typeText} 조건으로 ${list.length}대 차량이 조회되었습니다. 표시가는 공개 요금 참고 기반 상담 전 기준이며 실제 예약 확정가는 일정, 지역, 보험, 성수기 여부에 따라 달라집니다.`;
+        }
+
+        document.querySelectorAll('.filter-btn[data-maker]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn[data-maker]').forEach(item => item.classList.remove('active'));
+                btn.classList.add('active');
+                currentMaker = btn.dataset.maker;
+                maker.value = currentMaker;
+                renderVehicles();
+            });
         });
 
-        document.getElementById('faqList').addEventListener('click', (e) => {
-            const item = e.target.closest('.faq-item');
-            if (!item) return;
-            item.classList.toggle('open');
+        document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn[data-filter]').forEach(item => item.classList.remove('active'));
+                btn.classList.add('active');
+                currentType = btn.dataset.filter;
+                category.value = currentType;
+                renderVehicles();
+            });
         });
+
+        maker.addEventListener('change', () => {
+            currentMaker = maker.value;
+            document.querySelectorAll('.filter-btn[data-maker]').forEach(item => {
+                item.classList.toggle('active', item.dataset.maker === currentMaker);
+            });
+            renderVehicles();
+        });
+
+        category.addEventListener('change', () => {
+            currentType = category.value;
+            document.querySelectorAll('.filter-btn[data-filter]').forEach(item => {
+                item.classList.toggle('active', item.dataset.filter === currentType);
+            });
+            renderVehicles();
+        });
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            currentMaker = maker.value;
+            currentType = category.value;
+            renderVehicles();
+            document.getElementById('inventory').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        grid.addEventListener('click', event => {
+            const button = event.target.closest('button[data-car]');
+            if (!button) return;
+            document.getElementById('wantedCar').value = button.dataset.car;
+            document.getElementById('consult').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.getElementById('consultForm').addEventListener('submit', event => {
+            event.preventDefault();
+            document.getElementById('formNote').classList.add('show');
+        });
+
+        renderVehicles();
     </script>
-
 </body>
 </html>
