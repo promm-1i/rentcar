@@ -542,9 +542,6 @@
         .rate-board {
             max-width: 1180px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.2fr .8fr;
-            gap: 18px;
         }
         table {
             width: 100%;
@@ -566,16 +563,6 @@
             font-size: 13px;
         }
         tr:last-child td { border-bottom: 0; }
-        .source-box {
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 22px;
-            line-height: 1.65;
-        }
-        .source-box h3 { margin: 0 0 12px; }
-        .source-box ul { margin: 0; padding-left: 18px; color: var(--muted); }
-        .source-box a { text-decoration: underline; text-underline-offset: 3px; }
 
         .steps,
         .guide-grid {
@@ -818,7 +805,7 @@
             .booking-panel { border-left: 0; border-top: 1px solid var(--line); }
             .inventory { grid-template-columns: repeat(2, 1fr); }
             .steps, .guide-grid, .locations, .reviews-grid { grid-template-columns: repeat(2, 1fr); }
-            .rate-board, .consult { grid-template-columns: 1fr; }
+            .consult { grid-template-columns: 1fr; }
             .footer-inner { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 720px) {
@@ -1016,9 +1003,9 @@
         <section class="section alt" id="rates">
             <div class="section-head">
                 <div>
-                    <p class="eyebrow">Market based rate table</p>
-                    <h2>공개 요금 기반 표시가</h2>
-                    <p>대형 렌터카 정가, 여행 가격비교 평균가, 제주 최저가, 장기렌트 공식 조건을 함께 보고 너무 낮거나 높은 값은 피해서 상담용 기준가로 정리했습니다.</p>
+                    <p class="eyebrow">Rate table</p>
+                    <h2>차급별 대여 요금 안내</h2>
+                    <p>1일 기준 표시가는 차급별 상담 전 참고가이며, 장기렌트(월렌트)는 기간·주행거리·선납금 조건에 따라 별도로 산정되어 상담을 통해 안내드립니다.</p>
                 </div>
             </div>
 
@@ -1029,30 +1016,19 @@
                             <th>차급</th>
                             <th>대표 차량</th>
                             <th>표시 1일 기준가</th>
-                            <th>월렌트 상담가</th>
+                            <th>장기렌트(월렌트)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>경차/소형</td><td>캐스퍼</td><td>59,000원~</td><td>690,000원~</td></tr>
-                        <tr><td>국산 세단</td><td>아반떼, K5, 쏘나타, SM6</td><td>72,000원~</td><td>860,000원~</td></tr>
-                        <tr><td>국산 SUV/RV</td><td>투싼, 쏘렌토, 토레스, QM6</td><td>82,000원~</td><td>980,000원~</td></tr>
-                        <tr><td>승합/대형</td><td>카니발, 타호</td><td>159,000원~</td><td>1,790,000원~</td></tr>
-                        <tr><td>수입 세단/SUV</td><td>BMW 5시리즈, 벤츠 E클래스, 아우디 A6/Q5</td><td>170,000원~</td><td>1,980,000원~</td></tr>
-                        <tr><td>스포츠/쿠페</td><td>포드 머스탱, 머스탱 컨버터블</td><td>260,000원~</td><td>3,150,000원~</td></tr>
-                        <tr><td>전기차</td><td>아이오닉 5, EV6, EQA, Q8 e-tron</td><td>92,000원~</td><td>1,160,000원~</td></tr>
+                        <tr><td>경차/소형</td><td>캐스퍼</td><td>59,000원~</td><td>상담 후 안내</td></tr>
+                        <tr><td>국산 세단</td><td>아반떼, K5, 쏘나타, SM6</td><td>72,000원~</td><td>상담 후 안내</td></tr>
+                        <tr><td>국산 SUV/RV</td><td>투싼, 쏘렌토, 토레스, QM6</td><td>82,000원~</td><td>상담 후 안내</td></tr>
+                        <tr><td>승합/대형</td><td>카니발, 타호</td><td>159,000원~</td><td>상담 후 안내</td></tr>
+                        <tr><td>수입 세단/SUV</td><td>BMW 5시리즈, 벤츠 E클래스, 아우디 A6/Q5</td><td>170,000원~</td><td>상담 후 안내</td></tr>
+                        <tr><td>스포츠/쿠페</td><td>포드 머스탱, 머스탱 컨버터블</td><td>260,000원~</td><td>상담 후 안내</td></tr>
+                        <tr><td>전기차</td><td>아이오닉 5, EV6, EQA, Q8 e-tron</td><td>92,000원~</td><td>상담 후 안내</td></tr>
                     </tbody>
                 </table>
-
-                <aside class="source-box">
-                    <h3>요금 산정 참고 출처</h3>
-                    <ul>
-                        <li><a href="https://www.lotterentacar.net/hp/kor/reservation/shortInfo/pay.do" target="_blank" rel="noreferrer">롯데렌터카 단기 요금표</a>: 아반떼, K5, 카니발 등 공식 기준 요금</li>
-                        <li><a href="https://www.skyscanner.co.kr/car-hire-in/car-hire-in-jeju/39499832.html" target="_blank" rel="noreferrer">스카이스캐너 제주 렌터카</a>: K5 최저가와 월별 평균가</li>
-                        <li><a href="https://kr.trip.com/carhire/supplier/lotte-rent-a-car-sd15258/" target="_blank" rel="noreferrer">트립닷컴 롯데렌터카</a>: 최근 1일 평균 대여 요금</li>
-                        <li><a href="https://kr.trip.com/carhire/supplier/sk-rent-a-car-sd2113/" target="_blank" rel="noreferrer">트립닷컴 SK렌터카</a>: 최근 1일 평균 대여 요금</li>
-                        <li><a href="https://rental.kia.com/pc/longRent" target="_blank" rel="noreferrer">기아렌터카 장기렌트</a>: 48개월, 연 2만km 등 장기렌트 산정 조건</li>
-                    </ul>
-                </aside>
             </div>
         </section>
 
