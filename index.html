@@ -301,16 +301,19 @@
             flex-wrap: wrap;
             color: #fff;
         }
-        .qc-text { flex: 1 1 240px; min-width: 200px; }
+        .qc-text { flex: 1 1 240px; min-width: 0; }
         .qc-text strong { display: block; font-size: 17px; margin-bottom: 4px; }
         .qc-text span { font-size: 13px; color: rgba(255,255,255,.65); }
         .qc-form {
             flex: 2 1 520px;
+            min-width: 0;
             display: grid;
-            grid-template-columns: repeat(4, 1fr) auto;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
             gap: 8px;
         }
         .qc-form input {
+            min-width: 0;
+            width: 100%;
             min-height: 44px;
             border: 1px solid rgba(255,255,255,.2);
             border-radius: 6px;
@@ -318,6 +321,7 @@
             background: rgba(255,255,255,.08);
             color: #fff;
             font: inherit;
+            box-sizing: border-box;
         }
         .qc-form input::placeholder { color: rgba(255,255,255,.5); }
         .qc-form button {
@@ -340,7 +344,7 @@
         .qc-note.show { display: block; }
         @media (max-width: 720px) {
             .quick-consult-bar { padding: 18px; }
-            .qc-form { grid-template-columns: 1fr 1fr; }
+            .qc-form { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
             .qc-form button { grid-column: span 2; }
         }
         .filter-bar {
@@ -947,6 +951,13 @@
             border-radius: 12px;
             padding: 8px;
             box-shadow: var(--shadow);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s ease;
+        }
+        .quick-menu.visible {
+            opacity: 1;
+            pointer-events: auto;
         }
         .quick-menu a, .quick-menu button {
             width: 52px;
@@ -1901,6 +1912,15 @@
             document.getElementById('qcNote').classList.add('show');
             event.target.reset();
         });
+
+        const quickMenuEl = document.querySelector('.quick-menu');
+        const heroEl = document.querySelector('.hero');
+        function toggleQuickMenu() {
+            const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
+            quickMenuEl.classList.toggle('visible', window.scrollY > heroBottom - 160);
+        }
+        window.addEventListener('scroll', toggleQuickMenu);
+        toggleQuickMenu();
 
         document.getElementById('scrollTopBtn').addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
