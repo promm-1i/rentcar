@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROADIN RENTCAR | 국산·수입 렌터카 예약 상담</title>
-    <meta name="description" content="현대, 기아, BMW, 벤츠, 아우디, KG모빌리티, 르노코리아, 쉐보레, 포드 차량 단기렌트, 월렌트, 장기렌트 상담형 렌터카 홈페이지">
+    <title>ROADIN RENTCAR | 국산·수입 렌터카 단기·월렌트 견적 비교</title>
+    <meta name="description" content="현대, 기아, BMW, 벤츠, 아우디, KG모빌리티, 르노코리아, 쉐보레, 포드 등 국산·수입차 단기렌트, 월렌트, 장기렌트, 법인렌트 견적을 한 번에 비교하는 렌터카 상담 플랫폼">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="ROADIN RENTCAR | 국산·수입 렌터카 예약 상담">
-    <meta property="og:description" content="현대, 기아, BMW, 벤츠, 아우디 등 국산·수입 47종 차량을 조건별로 비교하고 견적 상담을 받아보세요.">
+    <meta property="og:title" content="ROADIN RENTCAR | 국산·수입 렌터카 단기·월렌트 견적 비교">
+    <meta property="og:description" content="현대, 기아, BMW, 벤츠, 아우디 등 국산·수입 47종 차량의 단기렌트·월렌트·법인렌트 견적을 조건별로 비교하고 상담받아보세요.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1200">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#141414">
@@ -274,6 +274,73 @@
             color: var(--muted);
             line-height: 1.65;
             max-width: 720px;
+        }
+        .recommended-block {
+            max-width: 1180px;
+            margin: 0 auto 32px;
+        }
+        .recommended-head {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .recommended-head h3 { margin: 0; font-size: 20px; }
+        .recommended-head span { color: var(--muted); font-size: 13px; }
+        .quick-consult-bar {
+            max-width: 1180px;
+            margin: 0 auto 20px;
+            background: var(--ink);
+            border-radius: 10px;
+            padding: 22px 26px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            color: #fff;
+        }
+        .qc-text { flex: 1 1 240px; min-width: 200px; }
+        .qc-text strong { display: block; font-size: 17px; margin-bottom: 4px; }
+        .qc-text span { font-size: 13px; color: rgba(255,255,255,.65); }
+        .qc-form {
+            flex: 2 1 520px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) auto;
+            gap: 8px;
+        }
+        .qc-form input {
+            min-height: 44px;
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 6px;
+            padding: 0 12px;
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            font: inherit;
+        }
+        .qc-form input::placeholder { color: rgba(255,255,255,.5); }
+        .qc-form button {
+            min-height: 44px;
+            padding: 0 18px;
+            border: none;
+            border-radius: 6px;
+            background: #fff;
+            color: var(--ink);
+            font-weight: 900;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .qc-note {
+            flex-basis: 100%;
+            font-size: 13px;
+            color: #b9f5cf;
+            display: none;
+        }
+        .qc-note.show { display: block; }
+        @media (max-width: 720px) {
+            .quick-consult-bar { padding: 18px; }
+            .qc-form { grid-template-columns: 1fr 1fr; }
+            .qc-form button { grid-column: span 2; }
         }
         .filter-bar {
             max-width: 1180px;
@@ -736,6 +803,69 @@
             gap: 14px;
         }
         .consult-form .wide { grid-column: span 2; }
+        .consent-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--muted);
+            cursor: pointer;
+        }
+        .consent-row input { accent-color: var(--ink); width: 16px; height: 16px; flex-shrink: 0; }
+        .consent-row a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal-box {
+            background: #fff;
+            border-radius: 10px;
+            padding: 28px;
+            max-width: 420px;
+            width: 100%;
+            display: grid;
+            gap: 10px;
+        }
+        .modal-box h3 { margin: 0 0 6px; font-size: 18px; }
+        .modal-box p { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.6; }
+        .detail-box { max-width: 480px; position: relative; max-height: 88vh; overflow-y: auto; }
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--soft);
+            border-radius: 999px;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--muted);
+        }
+        .dd-spec-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 4px 0 6px;
+        }
+        .dd-spec-grid div {
+            background: var(--soft);
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+        .dd-spec-grid .dd-label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+        .dd-spec-grid .dd-value { display: block; font-size: 13px; font-weight: 800; }
+        .dd-section h4 { margin: 0 0 4px; font-size: 14px; }
+        .dd-section p { font-size: 12.5px; }
         textarea {
             width: 100%;
             min-height: 112px;
@@ -786,7 +916,7 @@
             bottom: 0;
             z-index: 30;
             display: none;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             border-top: 1px solid rgba(255,255,255,.16);
             box-shadow: 0 -10px 28px rgba(0,0,0,.18);
         }
@@ -797,8 +927,51 @@
             background: var(--ink);
             color: #fff;
             font-weight: 900;
+            font-size: 13px;
         }
+        .mobile-bar a.kakao { background: #fee500; color: #191600; }
         .mobile-bar a:last-child { background: var(--blue); }
+
+        .quick-menu {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: var(--shadow);
+        }
+        .quick-menu a, .quick-menu button {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            border-radius: 8px;
+            border: none;
+            background: none;
+            color: var(--ink);
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .quick-menu a:hover, .quick-menu button:hover { background: var(--soft); }
+        .quick-menu .qm-icon { font-size: 18px; }
+        .quick-menu a.kakao { background: #fee500; }
+        .quick-menu a.kakao:hover { background: #fada00; }
+        .quick-menu hr { width: 100%; border: none; border-top: 1px solid var(--line); margin: 2px 0; }
+        @media (max-width: 1080px) {
+            .quick-menu { display: none; }
+        }
 
         @media (max-width: 1080px) {
             .hero { grid-template-columns: 1fr; }
@@ -951,10 +1124,37 @@
                 <div>
                     <p class="eyebrow">Multi brand vehicle inventory</p>
                     <h2>브랜드별 차량 재고판</h2>
-                    <p>현대·기아부터 BMW, 벤츠, 아우디, KG모빌리티, 르노코리아, 쉐보레, 포드 머스탱까지 제조사와 차급을 조합해 검색할 수 있도록 구성했습니다.</p>
+                    <p>현대·기아 국산차부터 BMW, 벤츠, 아우디 등 수입차 렌트까지 제조사와 차급을 조합해 검색할 수 있도록 구성했습니다. 단기렌트, 월렌트, 법인 장기렌트 모두 상담 가능합니다.</p>
                 </div>
             </div>
 
+            <div class="recommended-block">
+                <div class="recommended-head">
+                    <h3>이번 달 추천 차량</h3>
+                    <span>단기 인기·월렌트 추천·수입차까지 먼저 골라봤습니다</span>
+                </div>
+                <div class="inventory" id="recommendedGrid"></div>
+                <div style="margin-top:20px;">
+                    <a href="#allInventory" class="btn primary" style="display:inline-flex;align-items:center;padding:0 28px;text-decoration:none;">전체 47대 차량 보기</a>
+                </div>
+            </div>
+
+            <div class="quick-consult-bar">
+                <div class="qc-text">
+                    <strong>지금 조건에 맞는 차량, 5분 안에 확인하세요</strong>
+                    <span>이름과 연락처만 남기면 담당 상담원이 바로 안내드립니다.</span>
+                </div>
+                <form class="qc-form" id="quickConsultForm">
+                    <input type="text" placeholder="이름" id="qcName" required>
+                    <input type="text" placeholder="연락처" id="qcContact" required>
+                    <input type="text" placeholder="희망 차량 (선택)" id="qcCar">
+                    <input type="text" placeholder="희망 지역 (선택)" id="qcRegion">
+                    <button type="submit">빠른 상담 신청</button>
+                    <div class="qc-note" id="qcNote">접수 완료! 영업일 기준 30분 이내로 연락드립니다.</div>
+                </form>
+            </div>
+
+            <div id="allInventory"></div>
             <div class="filter-bar" aria-label="차량 필터">
                 <div class="filter-dropdown" id="makerDropdown">
                     <button type="button" class="filter-dropdown-btn" id="makerDropdownBtn">제조사: 전체 <span class="chevron">▾</span></button>
@@ -1242,9 +1442,46 @@
                     <div class="wide">
                         <textarea id="message" placeholder="대여 지역, 대여일, 반납일, 보험 희망 조건을 적어주세요."></textarea>
                     </div>
+                    <label class="consent-row wide">
+                        <input type="checkbox" id="privacyConsent" required>
+                        <span>[필수] <a href="#" id="privacyLink">개인정보 수집 및 이용</a>에 동의합니다.</span>
+                    </label>
                     <button class="btn primary wide" type="submit">견적 상담 접수하기</button>
                     <div class="result-note" id="formNote">견적 상담 접수가 완료되었습니다. 영업일 기준 30분 이내로 입력하신 연락처로 담당 상담원이 연락드립니다.</div>
                 </form>
+            </div>
+
+            <div class="modal-overlay" id="privacyModal">
+                <div class="modal-box">
+                    <h3>개인정보 수집 및 이용 안내</h3>
+                    <p><strong>수집 항목</strong>: 이름, 연락처, 희망 차량, 대여 지역, 상담 내용</p>
+                    <p><strong>수집 목적</strong>: 렌터카 견적 상담 및 예약 안내</p>
+                    <p><strong>보유 기간</strong>: 상담 완료 후 6개월간 보관 후 파기</p>
+                    <p>동의를 거부할 권리가 있으며, 미동의 시 견적 상담 접수가 제한될 수 있습니다.</p>
+                    <button type="button" class="btn primary" id="privacyModalClose" style="width:100%;">확인</button>
+                </div>
+            </div>
+
+            <div class="modal-overlay" id="carDetailModal">
+                <div class="modal-box detail-box">
+                    <button type="button" class="modal-close" id="carDetailClose" aria-label="닫기">×</button>
+                    <span class="maker-chip" id="ddMaker"></span>
+                    <h3 id="ddName"></h3>
+                    <div class="dd-spec-grid" id="ddSpecs"></div>
+                    <div class="dd-section">
+                        <h4>보험 안내</h4>
+                        <p>기본 보험이 포함되며, 사고 부담을 줄일 수 있는 완전자차 옵션을 선택할 수 있습니다. 면책금과 보상 한도는 예약 확정 전 고지합니다.</p>
+                    </div>
+                    <div class="dd-section">
+                        <h4>대여 조건</h4>
+                        <p>만 21세 이상, 면허 취득 1년 이상 기준으로 상담이 진행됩니다. 차량 등급에 따라 조건이 달라질 수 있습니다.</p>
+                    </div>
+                    <div class="dd-section">
+                        <h4>인수/반납</h4>
+                        <p>지점, 공항, 역, 터미널 인수가 가능하며 반납 지연 시 추가 요금이 발생할 수 있습니다.</p>
+                    </div>
+                    <button type="button" class="btn primary" id="ddConsultBtn" style="width:100%;">이 차량으로 견적 문의</button>
+                </div>
             </div>
         </section>
     </main>
@@ -1274,7 +1511,9 @@
                 <p>사업자등록번호 123-45-67890</p>
                 <p>통신판매업 신고 2025-서울강남-01234</p>
                 <p>서울특별시 강남구 테헤란로 123, 로드인타워 5층</p>
-                <p style="margin-top:10px;"><a href="#" onclick="return false;">이용약관</a> · <a href="#" onclick="return false;">개인정보처리방침</a></p>
+                <p style="margin-top:10px;">고객센터 1588-7040 · support@roadin-rentcar.co.kr</p>
+                <p>운영시간 매일 09:00~22:00 (주말 10:00~19:00)</p>
+                <p style="margin-top:10px;"><a href="#" onclick="return false;">이용약관</a> · <a href="#" id="footerPrivacyLink">개인정보처리방침</a></p>
             </div>
         </div>
         <div style="max-width:1180px;margin:26px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:rgba(255,255,255,.4);">
@@ -1284,7 +1523,17 @@
 
     <div class="mobile-bar">
         <a href="tel:1588-7040">전화 상담</a>
+        <a class="kakao" href="https://pf.kakao.com/_roadinrentcar" target="_blank" rel="noreferrer">카카오 상담</a>
         <a href="#consult">온라인 견적</a>
+    </div>
+
+    <div class="quick-menu" aria-label="빠른 상담 메뉴">
+        <a href="tel:1588-7040"><span class="qm-icon">☎</span>전화</a>
+        <a class="kakao" href="https://pf.kakao.com/_roadinrentcar" target="_blank" rel="noreferrer"><span class="qm-icon">💬</span>카카오</a>
+        <a href="#inventory"><span class="qm-icon">🔍</span>차량검색</a>
+        <a href="#consult"><span class="qm-icon">✎</span>견적문의</a>
+        <hr>
+        <button type="button" id="scrollTopBtn"><span class="qm-icon">↑</span>TOP</button>
     </div>
 
     <script>
@@ -1451,17 +1700,8 @@
             activeChips.innerHTML = chips.map(c => `<span class="active-chip">${c.label}<button type="button" data-clear="${c.key}" aria-label="필터 해제">×</button></span>`).join('');
         }
 
-        function renderVehicles() {
-            let list = vehicles.filter(car => {
-                const makerMatch = currentMaker === 'all' || car.maker === currentMaker;
-                const typeMatch = currentType === 'all' || car.cat === currentType;
-                return makerMatch && typeMatch;
-            });
-            if (currentSort === 'priceAsc') list = [...list].sort((a, b) => a.price - b.price);
-            if (currentSort === 'priceDesc') list = [...list].sort((a, b) => b.price - a.price);
-            filterCount.textContent = list.length;
-            syncFilterUI();
-            grid.innerHTML = list.map(car => `
+        function carCardHTML(car) {
+            return `
                 <article class="car-card" style="--maker-color:${makerThemes[car.maker].color}">
                     <div class="car-photo">
                         <img src="${car.img}" alt="${car.name} 렌터카 이미지" loading="lazy">
@@ -1486,11 +1726,34 @@
                         </div>
                         <div class="car-actions">
                             <button type="button" data-car="${car.name} ${car.trim}">견적 문의</button>
-                            <button type="button" data-car="${car.name} ${car.trim}">상세 조건</button>
+                            <button type="button" data-detail="${car.name} ${car.trim}">상세 조건</button>
                         </div>
                     </div>
                 </article>
-            `).join('') || '<div class="notice" style="grid-column:1/-1;">조건에 맞는 표시 차량이 없습니다. 제조사 또는 차량 유형을 다시 선택해 주세요.</div>';
+            `;
+        }
+
+        const RECOMMENDED_NAMES = ['캐스퍼', '아반떼', '투싼', '카니발', 'K5', '520i', '아이오닉 5', '머스탱'];
+        function renderRecommended() {
+            const recGrid = document.getElementById('recommendedGrid');
+            if (!recGrid) return;
+            const picks = RECOMMENDED_NAMES
+                .map(name => vehicles.find(car => car.name === name))
+                .filter(Boolean);
+            recGrid.innerHTML = picks.map(carCardHTML).join('');
+        }
+
+        function renderVehicles() {
+            let list = vehicles.filter(car => {
+                const makerMatch = currentMaker === 'all' || car.maker === currentMaker;
+                const typeMatch = currentType === 'all' || car.cat === currentType;
+                return makerMatch && typeMatch;
+            });
+            if (currentSort === 'priceAsc') list = [...list].sort((a, b) => a.price - b.price);
+            if (currentSort === 'priceDesc') list = [...list].sort((a, b) => b.price - a.price);
+            filterCount.textContent = list.length;
+            syncFilterUI();
+            grid.innerHTML = list.map(carCardHTML).join('') || '<div class="notice" style="grid-column:1/-1;">조건에 맞는 표시 차량이 없습니다. 제조사 또는 차량 유형을 다시 선택해 주세요.</div>';
             const makerText = currentMaker === 'all' ? '전체 제조사' : makerThemes[currentMaker].label;
             const typeText = category.options[category.selectedIndex].text;
             estimateBox.textContent = `${makerText} / ${typeText} 조건으로 ${list.length}대 차량이 조회되었습니다. 표시가는 공개 요금 참고 기반 상담 전 기준이며 실제 예약 확정가는 일정, 지역, 보험, 성수기 여부에 따라 달라집니다.`;
@@ -1559,11 +1822,56 @@
             document.getElementById('inventory').scrollIntoView({ behavior: 'smooth' });
         });
 
-        grid.addEventListener('click', event => {
+        document.addEventListener('click', event => {
             const button = event.target.closest('button[data-car]');
             if (!button) return;
             document.getElementById('wantedCar').value = button.dataset.car;
             document.getElementById('consult').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.addEventListener('click', event => {
+            const detailBtn = event.target.closest('button[data-detail]');
+            if (!detailBtn) return;
+            const car = vehicles.find(v => `${v.name} ${v.trim}` === detailBtn.dataset.detail);
+            if (!car) return;
+            document.getElementById('ddMaker').textContent = makerThemes[car.maker].label;
+            document.getElementById('ddName').textContent = `${car.name} ${car.trim}`;
+            document.getElementById('ddSpecs').innerHTML = `
+                <div><span class="dd-label">연식</span><span class="dd-value">${car.year}</span></div>
+                <div><span class="dd-label">인승</span><span class="dd-value">${car.seats}</span></div>
+                <div><span class="dd-label">연료</span><span class="dd-value">${car.fuel}</span></div>
+                <div><span class="dd-label">1일 요금</span><span class="dd-value">${won(car.price)}~</span></div>
+                <div><span class="dd-label">차급</span><span class="dd-value">${categoryLabels[car.cat]}</span></div>
+                <div><span class="dd-label">보험</span><span class="dd-value">선택 가능</span></div>
+            `;
+            document.getElementById('ddConsultBtn').dataset.car = `${car.name} ${car.trim}`;
+            document.getElementById('carDetailModal').classList.add('show');
+        });
+        document.getElementById('carDetailClose').addEventListener('click', () => {
+            document.getElementById('carDetailModal').classList.remove('show');
+        });
+        document.getElementById('carDetailModal').addEventListener('click', event => {
+            if (event.target.id === 'carDetailModal') event.target.classList.remove('show');
+        });
+        document.getElementById('ddConsultBtn').addEventListener('click', event => {
+            document.getElementById('wantedCar').value = event.target.dataset.car || '';
+            document.getElementById('carDetailModal').classList.remove('show');
+            document.getElementById('consult').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.getElementById('privacyLink').addEventListener('click', event => {
+            event.preventDefault();
+            document.getElementById('privacyModal').classList.add('show');
+        });
+        document.getElementById('footerPrivacyLink').addEventListener('click', event => {
+            event.preventDefault();
+            document.getElementById('privacyModal').classList.add('show');
+        });
+        document.getElementById('privacyModalClose').addEventListener('click', () => {
+            document.getElementById('privacyModal').classList.remove('show');
+        });
+        document.getElementById('privacyModal').addEventListener('click', event => {
+            if (event.target.id === 'privacyModal') event.target.classList.remove('show');
         });
 
         document.getElementById('consultForm').addEventListener('submit', event => {
@@ -1578,7 +1886,24 @@
             item.classList.toggle('open');
         });
 
+        document.getElementById('quickConsultForm').addEventListener('submit', event => {
+            event.preventDefault();
+            document.getElementById('wantedCar').value = document.getElementById('qcCar').value;
+            document.getElementById('name').value = document.getElementById('qcName').value;
+            document.getElementById('contact').value = document.getElementById('qcContact').value;
+            if (document.getElementById('qcRegion').value) {
+                document.getElementById('message').value = `희망 지역: ${document.getElementById('qcRegion').value}`;
+            }
+            document.getElementById('qcNote').classList.add('show');
+            event.target.reset();
+        });
+
+        document.getElementById('scrollTopBtn').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
         renderVehicles();
+        renderRecommended();
     </script>
 </body>
 </html>
