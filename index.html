@@ -1323,36 +1323,67 @@
             chevrolet: { label: '쉐보레', color: '#b3831d' },
             ford: { label: '포드', color: '#164f9f' }
         };
-        const u = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=900`;
-        const IMG = {
-            A: u('1571127236794-81c0bbfe1ce3'),
-            B: u('1546614042-7df3c24c9e5d'),
-            C: u('1503376780353-7e6692767b70'),
-            D: u('1601362840469-51e4d8d58785'),
-            E: u('1519641471654-76ce0107ad1b'),
-            F: u('1541899481282-d53bffe3c35d'),
-            G: u('1593941707882-a5bba14938c7'),
-            H: u('1492144534655-ae79c964c9d7'),
-            I: u('1547038577-da80abbc4f19')
-        };
-        const photoPool = {
-            compact: [IMG.E, IMG.A],
-            sedanEconomy: [IMG.B, IMG.F],
-            sedanLuxury: [IMG.C, IMG.D],
-            suvEconomy: [IMG.E, IMG.A],
-            suvLuxury: [IMG.H, IMG.D],
-            van: [IMG.F, IMG.B],
-            evEconomy: [IMG.E, IMG.G],
-            evLuxury: [IMG.H, IMG.I],
-            sports: [IMG.H, IMG.I]
-        };
-        const importMakers = ['bmw', 'benz', 'audi', 'ford'];
-        function pickImage(cat, maker, idx) {
-            const tier = importMakers.includes(maker) ? 'Luxury' : 'Economy';
-            const key = (cat === 'sedan' || cat === 'suv' || cat === 'ev') ? cat + tier : cat;
-            const pool = photoPool[key] || photoPool[cat];
-            return pool[idx % pool.length];
-        }
+        const CAR_IMAGES = [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/00_HYUNDAI_CASPER_00.jpg/960px-00_HYUNDAI_CASPER_00.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hyundai_Avante_N_line_CN7_red_%283%29.jpg/960px-Hyundai_Avante_N_line_CN7_red_%283%29.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/2020_Hyundai_Sonata_SEL_%28Quartz_White%29%2C_front_right.jpg/960px-2020_Hyundai_Sonata_SEL_%28Quartz_White%29%2C_front_right.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Hyundai_Grandeur_TG_Ebony_Black_%287%29.jpg/960px-Hyundai_Grandeur_TG_Ebony_Black_%287%29.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Hyundai_Venue_1.6_GLS_2021.jpg/960px-Hyundai_Venue_1.6_GLS_2021.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Hyundai_Kona_N_IMG_5399.jpg/960px-Hyundai_Kona_N_IMG_5399.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Hyundai_Tucson_%28NX4%2C_SWB%29_PHEV_1X7A1858.jpg/960px-Hyundai_Tucson_%28NX4%2C_SWB%29_PHEV_1X7A1858.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/2024_Hyundai_Santa_Fe_%28MX5%29_IMG_5309.jpg/960px-2024_Hyundai_Santa_Fe_%28MX5%29_IMG_5309.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Hyundai_Ioniq_5_IAA_2021_1X7A0189.jpg/960px-Hyundai_Ioniq_5_IAA_2021_1X7A0189.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Hyundai_Staria_DE.jpg/960px-Hyundai_Staria_DE.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/2017_Kia_Picanto_GT-Line_S_1.2_Front.jpg/960px-2017_Kia_Picanto_GT-Line_S_1.2_Front.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Kia_Ray.jpg/960px-Kia_Ray.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/KIA_FORTE_R_%28KIA_FORTE_SEDAN_%28TD%29%29_China.jpg/960px-KIA_FORTE_R_%28KIA_FORTE_SEDAN_%28TD%29%29_China.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/0_Kia_K5_%28TF%29_10.jpg/960px-0_Kia_K5_%28TF%29_10.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/0_Kia_K8_14.jpg/960px-0_Kia_K8_14.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kia_Seltos_IMG_9152.jpg/960px-Kia_Seltos_IMG_9152.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kia_Sportage_Plug-in-Hybrid_%28NQ5%29_1X7A0317.jpg/960px-Kia_Sportage_Plug-in-Hybrid_%28NQ5%29_1X7A0317.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/2024_Kia_Sorento_%28MQ4%29_Ditzingen_Mobil_IMG_9803.jpg/960px-2024_Kia_Sorento_%28MQ4%29_Ditzingen_Mobil_IMG_9803.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/2018_Kia_Carnival_%28YP_MY19%29_S_van_%282018-10-01%29_01.jpg/960px-2018_Kia_Carnival_%28YP_MY19%29_S_van_%282018-10-01%29_01.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Kia_EV6_GT_IMG_8171.jpg/960px-Kia_EV6_GT_IMG_8171.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/BMW_3_SERIES_LWB_SEDAN_%28G28%29_China_%282%29.jpg/960px-BMW_3_SERIES_LWB_SEDAN_%28G28%29_China_%282%29.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/BMW_G60_520i_1X7A2443.jpg/960px-BMW_G60_520i_1X7A2443.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/BMW_G30_530e_IMG_4327.jpg/960px-BMW_G30_530e_IMG_4327.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/BMW_G45_X3_M50_DSC_8805.jpg/960px-BMW_G45_X3_M50_DSC_8805.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/BMW_X5_M_%28G05%29_1X7A7047.jpg/960px-BMW_X5_M_%28G05%29_1X7A7047.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/BMW_i4_IAA_2021_1X7A0307.jpg/960px-BMW_i4_IAA_2021_1X7A0307.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Mercedes-Benz_C-Class_w204_amk.jpg/960px-Mercedes-Benz_C-Class_w204_amk.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/MERCEDES-BENZ_E_CLASS_LWB_%28W214%29_China.jpg/960px-MERCEDES-BENZ_E_CLASS_LWB_%28W214%29_China.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Mercedes-Benz_W214_E_300_4MATIC_EXCLUSIVE_Obsidian_Black_%2818%29.jpg/960px-Mercedes-Benz_W214_E_300_4MATIC_EXCLUSIVE_Obsidian_Black_%2818%29.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Mercedes-AMG_GLC_63_%28X254%29_IMG_0288.jpg/960px-Mercedes-AMG_GLC_63_%28X254%29_IMG_0288.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Mercedes-AMG_GLE_63_S_4MATIC_IMG_1288.jpg/960px-Mercedes-AMG_GLE_63_S_4MATIC_IMG_1288.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Mercedes-Benz_Concept_EQA%2C_IAA_2017%2C_Frankfurt_%281Y7A2961%29.jpg/960px-Mercedes-Benz_Concept_EQA%2C_IAA_2017%2C_Frankfurt_%281Y7A2961%29.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Audi_A4_B9_sedans_%28FL%29_1X7A6816.jpg/960px-Audi_A4_B9_sedans_%28FL%29_1X7A6816.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Audi_A6_C9_IAA_2025_DSC_1920.jpg/960px-Audi_A6_C9_IAA_2025_DSC_1920.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Audi_A7_Sportback_%282011%29.jpeg/960px-Audi_A7_Sportback_%282011%29.jpeg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Audi_Q3_FJ_IAA_2025_DSC_2505.jpg/960px-Audi_Q3_FJ_IAA_2025_DSC_2505.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Audi_Q5_Sportback_GU_DSC_9268.jpg/960px-Audi_Q5_Sportback_GU_DSC_9268.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Audi_Q8_e-tron_Sportback_1X7A7094.jpg/960px-Audi_Q8_e-tron_Sportback_1X7A7094.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/SsangYong_Tivoli_Grand_Automesse_Ludwigsburg_2022_1X7A5915.jpg/960px-SsangYong_Tivoli_Grand_Automesse_Ludwigsburg_2022_1X7A5915.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Ssangyong_Korando_e-Motion_IMG_6214.jpg/960px-Ssangyong_Korando_e-Motion_IMG_6214.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/SsangYong_Torres_Automesse_Ludwigsburg_2024_IMG_1442.jpg/960px-SsangYong_Torres_Automesse_Ludwigsburg_2024_IMG_1442.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/2024_KGM_Torres_K40_EVX.jpg/960px-2024_KGM_Torres_K40_EVX.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/SsangYong_Rexton_%282nd_generation%29_Facelift_AMA_Marbach_2025_DSC_8616.jpg/960px-SsangYong_Rexton_%282nd_generation%29_Facelift_AMA_Marbach_2025_DSC_8616.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/SsangYong_Rexton_Sports_2.2_Q215_Marble_Grey_%281%29.jpg/960px-SsangYong_Rexton_Sports_2.2_Q215_Marble_Grey_%281%29.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Renault_Arkana_%28CMF-B%29_Facelift_IMG_9851.jpg/960px-Renault_Arkana_%28CMF-B%29_Facelift_IMG_9851.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Renault_Koleos_II_Facelift_1X7A1659.jpg/960px-Renault_Koleos_II_Facelift_1X7A1659.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Renault_Talisman_%282015%29_1X7A1604.jpg/960px-Renault_Talisman_%282015%29_1X7A1604.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Renault_Arkana_%28CMF-B%29_Facelift_IMG_9851.jpg/960px-Renault_Arkana_%28CMF-B%29_Facelift_IMG_9851.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/2024_Renault_Grand_Koleos_E-Tech_Hybrid_Iconic_front_view.jpg/960px-2024_Renault_Grand_Koleos_E-Tech_Hybrid_Iconic_front_view.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Chevrolet_Spark._Bukhara%2C_Uzbekistan.jpg/960px-Chevrolet_Spark._Bukhara%2C_Uzbekistan.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Chevrolet_Malibu_%282008-2011%29_1X7A7375.jpg/960px-Chevrolet_Malibu_%282008-2011%29_1X7A7375.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Chevrolet_Trax_Facelift_1X7A0307.jpg/960px-Chevrolet_Trax_Facelift_1X7A0307.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Chevrolet_Trailblazer_4x4_LTZ_Z71.jpg/960px-Chevrolet_Trailblazer_4x4_LTZ_Z71.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Chevrolet_Equinox_%28third_generation%29_1X7A6226.jpg/960px-Chevrolet_Equinox_%28third_generation%29_1X7A6226.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/2024_Chevrolet_Tahoe_5.3_Z71_V8%2C_front_right%2C_06-16-2024.jpg/960px-2024_Chevrolet_Tahoe_5.3_Z71_V8%2C_front_right%2C_06-16-2024.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2020_Ford_Mustang_Shelby_GT500_Coupe%2C_Cleveland_Auto_Show.jpg/960px-2020_Ford_Mustang_Shelby_GT500_Coupe%2C_Cleveland_Auto_Show.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ford_Mustang_VII_Convertible_Autofr%C3%BChling_Ulm_IMG_9339.jpg/960px-Ford_Mustang_VII_Convertible_Autofr%C3%BChling_Ulm_IMG_9339.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Ford_Explorer_EV_IAA_2023_1X7A0593.jpg/960px-Ford_Explorer_EV_IAA_2023_1X7A0593.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Ford_Bronco_Sport_Badlands_1X7A0384.jpg/960px-Ford_Bronco_Sport_Badlands_1X7A0384.jpg"
+        ];
         const v = (maker, name, trim, cat, seats, fuel, year, price, monthly, tag) => ({
             maker, name, trim, cat, seats, fuel, year, price, monthly, tag
         });
@@ -1425,7 +1456,7 @@
             v('ford', '익스플로러', '2.3 AWD', 'suv', '7인승', '가솔린', '23~25년식', 220000, 2650000, '수입 대형 SUV'),
             v('ford', '브롱코', 'Outer Banks', 'suv', '5인승', '가솔린', '23~25년식', 300000, 3550000, '레저 SUV')
         ];
-        vehicles.forEach((car, i) => { car.img = pickImage(car.cat, car.maker, i); });
+        vehicles.forEach((car, i) => { car.img = CAR_IMAGES[i]; });
 
         const categoryLabels = {
             all: '전체', compact: '경차/소형', sedan: '세단', suv: 'SUV/RV',
