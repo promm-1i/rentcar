@@ -275,40 +275,144 @@
             line-height: 1.65;
             max-width: 720px;
         }
-        .filter-groups {
+        .filter-bar {
             max-width: 1180px;
-            margin: 0 auto 24px;
-            display: grid;
-            gap: 14px;
+            margin: 0 auto 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            background: #fff;
         }
-        .filter-group {
-            display: grid;
+        .filter-dropdown {
+            position: relative;
+        }
+        .filter-dropdown-btn {
+            display: flex;
+            align-items: center;
             gap: 8px;
+            padding: 11px 14px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: #fff;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
         }
-        .filter-label {
-            font-size: 12px;
-            font-weight: 900;
+        .filter-dropdown-btn .chevron {
+            font-size: 10px;
+            color: var(--muted);
+            transition: transform .15s ease;
+        }
+        .filter-dropdown.open .filter-dropdown-btn {
+            border-color: var(--ink);
+        }
+        .filter-dropdown.open .chevron {
+            transform: rotate(180deg);
+        }
+        .filter-dropdown-btn.has-value {
+            border-color: var(--ink);
+            background: var(--ink);
+            color: #fff;
+        }
+        .filter-dropdown-btn.has-value .chevron {
+            color: rgba(255,255,255,.7);
+        }
+        .filter-panel {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            z-index: 15;
+            min-width: 200px;
+            max-height: 320px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 8px;
+            display: none;
+        }
+        .filter-dropdown.open .filter-panel {
+            display: block;
+        }
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .filter-option:hover {
+            background: var(--soft);
+        }
+        .filter-option input {
+            accent-color: var(--ink);
+        }
+        .filter-result-bar {
+            max-width: 1180px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .filter-count {
+            font-size: 14px;
+            font-weight: 700;
             color: var(--muted);
         }
-        .filters {
+        .filter-count strong {
+            color: var(--ink);
+            font-size: 16px;
+        }
+        .filter-result-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .active-chips {
             display: flex;
             gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
+            flex-wrap: wrap;
         }
-        .filter-btn {
+        .active-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--soft);
             border: 1px solid var(--line);
-            background: #fff;
             border-radius: 999px;
-            padding: 10px 16px;
-            font-weight: 900;
-            white-space: nowrap;
-            cursor: pointer;
+            padding: 6px 8px 6px 12px;
+            font-size: 12px;
+            font-weight: 800;
         }
-        .filter-btn.active {
-            background: var(--ink);
-            border-color: var(--ink);
-            color: #fff;
+        .active-chip button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 15px;
+            line-height: 1;
+            color: var(--muted);
+            padding: 2px;
+        }
+        .sort-select {
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-weight: 700;
+            font-size: 13px;
+            background: #fff;
+            cursor: pointer;
         }
         .inventory {
             max-width: 1180px;
@@ -737,6 +841,12 @@
             .mobile-bar { display: grid; }
             .partner-strip { padding: 20px 18px; }
             .review-summary { flex-wrap: wrap; }
+            .filter-bar { padding: 12px; gap: 8px; }
+            .filter-dropdown { flex: 1 1 calc(50% - 4px); }
+            .filter-dropdown-btn { width: 100%; justify-content: space-between; }
+            .filter-panel { left: 0; right: 0; min-width: 0; }
+            .filter-result-bar { align-items: flex-start; }
+            .sort-select { flex: 1; }
         }
     </style>
 </head>
@@ -858,33 +968,45 @@
                 </div>
             </div>
 
-            <div class="filter-groups" aria-label="차량 필터">
-                <div class="filter-group">
-                    <span class="filter-label">제조사</span>
-                    <div class="filters">
-                        <button class="filter-btn active" data-maker="all">전체</button>
-                        <button class="filter-btn" data-maker="hyundai">현대</button>
-                        <button class="filter-btn" data-maker="kia">기아</button>
-                        <button class="filter-btn" data-maker="bmw">BMW</button>
-                        <button class="filter-btn" data-maker="benz">벤츠</button>
-                        <button class="filter-btn" data-maker="audi">아우디</button>
-                        <button class="filter-btn" data-maker="kgm">KG모빌리티</button>
-                        <button class="filter-btn" data-maker="renault">르노코리아</button>
-                        <button class="filter-btn" data-maker="chevrolet">쉐보레</button>
-                        <button class="filter-btn" data-maker="ford">포드</button>
+            <div class="filter-bar" aria-label="차량 필터">
+                <div class="filter-dropdown" id="makerDropdown">
+                    <button type="button" class="filter-dropdown-btn" id="makerDropdownBtn">제조사: 전체 <span class="chevron">▾</span></button>
+                    <div class="filter-panel" id="makerPanel">
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="all" checked> 전체</label>
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="hyundai"> 현대</label>
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="kia"> 기아</label>
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="bmw"> BMW</label>
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="benz"> 벤츠</label>
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="audi"> 아우디</label>
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="kgm"> KG모빌리티</label>
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="renault"> 르노코리아</label>
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="chevrolet"> 쉐보레</label>
+                        <label class="filter-option"><input type="radio" name="makerRadio" value="ford"> 포드</label>
                     </div>
                 </div>
-                <div class="filter-group">
-                    <span class="filter-label">차량 유형</span>
-                    <div class="filters">
-                        <button class="filter-btn active" data-filter="all">전체</button>
-                        <button class="filter-btn" data-filter="compact">경차/소형</button>
-                        <button class="filter-btn" data-filter="sedan">세단</button>
-                        <button class="filter-btn" data-filter="suv">SUV/RV</button>
-                        <button class="filter-btn" data-filter="van">승합/리무진</button>
-                        <button class="filter-btn" data-filter="sports">스포츠/쿠페</button>
-                        <button class="filter-btn" data-filter="ev">전기차</button>
+                <div class="filter-dropdown" id="categoryDropdown">
+                    <button type="button" class="filter-dropdown-btn" id="categoryDropdownBtn">차량 유형: 전체 <span class="chevron">▾</span></button>
+                    <div class="filter-panel" id="categoryPanel">
+                        <label class="filter-option"><input type="radio" name="categoryRadio" value="all" checked> 전체</label>
+                        <label class="filter-option"><input type="radio" name="categoryRadio" value="compact"> 경차/소형</label>
+                        <label class="filter-option"><input type="radio" name="categoryRadio" value="sedan"> 세단</label>
+                        <label class="filter-option"><input type="radio" name="categoryRadio" value="suv"> SUV/RV</label>
+                        <label class="filter-option"><input type="radio" name="categoryRadio" value="van"> 승합/리무진</label>
+                        <label class="filter-option"><input type="radio" name="categoryRadio" value="sports"> 스포츠/쿠페</label>
+                        <label class="filter-option"><input type="radio" name="categoryRadio" value="ev"> 전기차</label>
                     </div>
+                </div>
+            </div>
+
+            <div class="filter-result-bar">
+                <div class="filter-count">총 <strong id="filterCount">59</strong>대</div>
+                <div class="filter-result-right">
+                    <div class="active-chips" id="activeChips"></div>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="recommend">추천순</option>
+                        <option value="priceAsc">낮은 요금순</option>
+                        <option value="priceDesc">높은 요금순</option>
+                    </select>
                 </div>
             </div>
 
@@ -1202,16 +1324,27 @@
             ford: { label: '포드', color: '#164f9f' }
         };
         const u = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=900`;
+        const IMG = {
+            A: u('1571127236794-81c0bbfe1ce3'),
+            B: u('1546614042-7df3c24c9e5d'),
+            C: u('1503376780353-7e6692767b70'),
+            D: u('1601362840469-51e4d8d58785'),
+            E: u('1519641471654-76ce0107ad1b'),
+            F: u('1541899481282-d53bffe3c35d'),
+            G: u('1593941707882-a5bba14938c7'),
+            H: u('1492144534655-ae79c964c9d7'),
+            I: u('1547038577-da80abbc4f19')
+        };
         const photoPool = {
-            compact: [u('1549924231-f129b911e442'), u('1580273916550-e323be2ae537')],
-            sedanEconomy: [u('1502877338535-766e1452684a'), u('1494905998402-395d579af36f')],
-            sedanLuxury: [u('1541899481282-d53bffe3c35d'), u('1503376780353-7e6692767b70')],
-            suvEconomy: [u('1519641471654-76ce0107ad1b'), u('1511919884226-fd3cad34687c')],
-            suvLuxury: [u('1614200187524-dc4b892acf16'), u('1567818735868-e71b99932e29')],
-            van: [u('1550355291-bbee04a92027'), u('1618843479313-40f8afb4b4d8')],
-            evEconomy: [u('1593941707882-a5bba14938c7'), u('1571127236794-81c0bbfe1ce3')],
-            evLuxury: [u('1568605117036-5fe5e7bab0b7'), u('1617469767053-d3b523a0b982')],
-            sports: [u('1492144534655-ae79c964c9d7'), u('1533473359331-0135ef1b58bf')]
+            compact: [IMG.E, IMG.A],
+            sedanEconomy: [IMG.B, IMG.F],
+            sedanLuxury: [IMG.C, IMG.D],
+            suvEconomy: [IMG.E, IMG.A],
+            suvLuxury: [IMG.H, IMG.D],
+            van: [IMG.F, IMG.B],
+            evEconomy: [IMG.E, IMG.G],
+            evLuxury: [IMG.H, IMG.I],
+            sports: [IMG.H, IMG.I]
         };
         const importMakers = ['bmw', 'benz', 'audi', 'ford'];
         function pickImage(cat, maker, idx) {
@@ -1294,21 +1427,57 @@
         ];
         vehicles.forEach((car, i) => { car.img = pickImage(car.cat, car.maker, i); });
 
+        const categoryLabels = {
+            all: '전체', compact: '경차/소형', sedan: '세단', suv: 'SUV/RV',
+            van: '승합/리무진', sports: '스포츠/쿠페', ev: '전기차'
+        };
+
         const grid = document.getElementById('inventoryGrid');
         const maker = document.getElementById('maker');
         const category = document.getElementById('category');
         const estimateBox = document.getElementById('estimateBox');
+        const filterCount = document.getElementById('filterCount');
+        const activeChips = document.getElementById('activeChips');
+        const sortSelect = document.getElementById('sortSelect');
+        const makerDropdown = document.getElementById('makerDropdown');
+        const makerDropdownBtn = document.getElementById('makerDropdownBtn');
+        const categoryDropdown = document.getElementById('categoryDropdown');
+        const categoryDropdownBtn = document.getElementById('categoryDropdownBtn');
         const won = value => value.toLocaleString('ko-KR') + '원';
 
         let currentMaker = 'all';
         let currentType = 'all';
+        let currentSort = 'recommend';
+
+        function syncFilterUI() {
+            const makerText = currentMaker === 'all' ? '전체' : makerThemes[currentMaker].label;
+            makerDropdownBtn.innerHTML = `제조사: ${makerText} <span class="chevron">▾</span>`;
+            makerDropdownBtn.classList.toggle('has-value', currentMaker !== 'all');
+            const typeText = categoryLabels[currentType];
+            categoryDropdownBtn.innerHTML = `차량 유형: ${typeText} <span class="chevron">▾</span>`;
+            categoryDropdownBtn.classList.toggle('has-value', currentType !== 'all');
+
+            document.querySelectorAll('input[name="makerRadio"]').forEach(r => { r.checked = r.value === currentMaker; });
+            document.querySelectorAll('input[name="categoryRadio"]').forEach(r => { r.checked = r.value === currentType; });
+            maker.value = currentMaker;
+            category.value = currentType;
+
+            const chips = [];
+            if (currentMaker !== 'all') chips.push({ key: 'maker', label: makerThemes[currentMaker].label });
+            if (currentType !== 'all') chips.push({ key: 'category', label: categoryLabels[currentType] });
+            activeChips.innerHTML = chips.map(c => `<span class="active-chip">${c.label}<button type="button" data-clear="${c.key}" aria-label="필터 해제">×</button></span>`).join('');
+        }
 
         function renderVehicles() {
-            const list = vehicles.filter(car => {
+            let list = vehicles.filter(car => {
                 const makerMatch = currentMaker === 'all' || car.maker === currentMaker;
                 const typeMatch = currentType === 'all' || car.cat === currentType;
                 return makerMatch && typeMatch;
             });
+            if (currentSort === 'priceAsc') list = [...list].sort((a, b) => a.price - b.price);
+            if (currentSort === 'priceDesc') list = [...list].sort((a, b) => b.price - a.price);
+            filterCount.textContent = list.length;
+            syncFilterUI();
             grid.innerHTML = list.map(car => `
                 <article class="car-card" style="--maker-color:${makerThemes[car.maker].color}">
                     <div class="car-photo">
@@ -1345,39 +1514,59 @@
             estimateBox.textContent = `${makerText} / ${typeText} 조건으로 ${list.length}대 차량이 조회되었습니다. 표시가는 공개 요금 참고 기반 상담 전 기준이며 실제 예약 확정가는 일정, 지역, 보험, 성수기 여부에 따라 달라집니다.`;
         }
 
-        document.querySelectorAll('.filter-btn[data-maker]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn[data-maker]').forEach(item => item.classList.remove('active'));
-                btn.classList.add('active');
-                currentMaker = btn.dataset.maker;
-                maker.value = currentMaker;
+        function closeDropdowns(except) {
+            [makerDropdown, categoryDropdown].forEach(d => { if (d !== except) d.classList.remove('open'); });
+        }
+
+        makerDropdownBtn.addEventListener('click', event => {
+            event.stopPropagation();
+            const opening = !makerDropdown.classList.contains('open');
+            closeDropdowns();
+            makerDropdown.classList.toggle('open', opening);
+        });
+        categoryDropdownBtn.addEventListener('click', event => {
+            event.stopPropagation();
+            const opening = !categoryDropdown.classList.contains('open');
+            closeDropdowns();
+            categoryDropdown.classList.toggle('open', opening);
+        });
+        document.addEventListener('click', () => closeDropdowns());
+
+        document.querySelectorAll('input[name="makerRadio"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                currentMaker = radio.value;
                 renderVehicles();
+                makerDropdown.classList.remove('open');
+            });
+        });
+        document.querySelectorAll('input[name="categoryRadio"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                currentType = radio.value;
+                renderVehicles();
+                categoryDropdown.classList.remove('open');
             });
         });
 
-        document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn[data-filter]').forEach(item => item.classList.remove('active'));
-                btn.classList.add('active');
-                currentType = btn.dataset.filter;
-                category.value = currentType;
-                renderVehicles();
-            });
+        activeChips.addEventListener('click', event => {
+            const btn = event.target.closest('button[data-clear]');
+            if (!btn) return;
+            if (btn.dataset.clear === 'maker') currentMaker = 'all';
+            if (btn.dataset.clear === 'category') currentType = 'all';
+            renderVehicles();
+        });
+
+        sortSelect.addEventListener('change', () => {
+            currentSort = sortSelect.value;
+            renderVehicles();
         });
 
         maker.addEventListener('change', () => {
             currentMaker = maker.value;
-            document.querySelectorAll('.filter-btn[data-maker]').forEach(item => {
-                item.classList.toggle('active', item.dataset.maker === currentMaker);
-            });
             renderVehicles();
         });
 
         category.addEventListener('change', () => {
             currentType = category.value;
-            document.querySelectorAll('.filter-btn[data-filter]').forEach(item => {
-                item.classList.toggle('active', item.dataset.filter === currentType);
-            });
             renderVehicles();
         });
 
